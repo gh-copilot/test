@@ -39,7 +39,7 @@ jobs:
           node-version: '16'
       
       - name : "Install aria2 downloader" 
-        run: sudo apt update && sudo apt install aria2
+        run: sudo apt update && sudo apt install p7zip-full
       
       - name : "Install rename utility" 
         run: sudo apt update && sudo apt install rename
@@ -67,13 +67,15 @@ jobs:
           echo "VERSION=${version}" >> $GITHUB_ENV
           rm -v "${file}"
 
+      - run: 7z a postman/app/resources/app/js/scratchpad/scratchpad.js.7z postman/app/resources/app/js/scratchpad/scratchpad.js
 
       - name: Release Files
         uses: softprops/action-gh-release@v1
         with:
-          name: "postman v${{ env.VERSION }} scratchpad.js"
+          name: "postman v${{ env.VERSION }} js files"
           tag_name: ${{ env.VERSION }}
-          files: | 
+          files: |
+            postman/app/resources/app/js/scratchpad/scratchpad.js.7z
             postman/app/resources/app/js/scratchpad/scratchpad.js
             postman/app/resources/app/js/scratchpad/requester-legacy.js
             postman/app/resources/app/js/requester.js
