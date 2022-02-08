@@ -72,7 +72,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           name: "postman v${{ env.VERSION }} scratchpad.js"
-          body_path: checksum
           tag_name: ${{ env.VERSION }}
           files: | 
             postman/app/resources/app/js/scratchpad/scratchpad.js
