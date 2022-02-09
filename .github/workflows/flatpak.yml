@@ -22,7 +22,8 @@ jobs:
 
       - run: | 
           sudo add-apt-repository ppa:flatpak/stable -y && sudo apt install flatpak -y
-          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          echo "======================================================================"
+          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
       - run: |
           cat <<EOF > flatpak.txt
@@ -66,7 +67,7 @@ jobs:
       - run: |
           cat flatpak.txt | while read package 
           do
-            flatpak install flathub "$package" -y
+            sudo flatpak install flathub "$package" -y
             echo ""
             echo ""
             echo "===================================================================================================="
@@ -76,12 +77,12 @@ jobs:
           done
 
 
-      - run: flatpak list --show-details --verbose
+      - run: sudo flatpak list --show-details --verbose
 
       - run: |
           cat flatpak.txt | while read package 
           do
-            flatpak info --show-permissions "$package"
+            sudo flatpak info --show-permissions "$package"
             echo ""
             echo ""
             echo "===================================================================================================="
