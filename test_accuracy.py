@@ -7,6 +7,10 @@ if (__name__ == '__main__' and __package__ is None) or __package__ == '':
     sys.path.append(str(file.parents[3]))
     __package__ = '.'.join(file.parent.parts[len(file.parents[3].parts):])
 
+import sys
+from IPython.core import ultratb
+sys.excepthook = ultratb.FormattedTB(mode='Verbose', color_scheme='Linux', call_pdb=False)
+
 import os
 from feature_extracton import FeatureExtraction
 import knn
