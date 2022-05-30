@@ -59,7 +59,7 @@ jobs:
       
       
       - run: conda update -n base -c defaults conda
-      - run: conda install -c conda-forge dlib opencv numpy scikit-learn -y
+      - run: conda install -c conda-forge dlib opencv numpy scikit-learn ipython -y
       - run: conda list
       
       - run: tar -xf models.tar.xz --skip-old-files
