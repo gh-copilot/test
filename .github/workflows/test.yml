@@ -66,7 +66,7 @@ jobs:
       - run: tar -xf ytfaces_test_numpy.tar.xz --skip-old-files
       
       - name: "Run With Conflict Solver"
-        if: contains(matrix.conflict_solver, "true")
+        if: ${{ matrix.conflict_solver == 'true' }}
         continue-on-error: true
         run: |
           echo "Conflict Resolution: True"
@@ -82,7 +82,7 @@ jobs:
           done
       
       - name: "Run Without Conflict Solver"
-        if: contains(matrix.conflict_solver, "false")
+        if: ${{ matrix.conflict_solver == 'false' }}
         continue-on-error: true
         run: |
           echo "Conflict Resolution: False"
