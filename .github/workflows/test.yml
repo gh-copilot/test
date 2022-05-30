@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [ test ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+env:
+  FORCE_COLOR : 'true' # Force colors in console output
+
+jobs:
+  Test:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        model: 
+          - 'mug_48x48_n=100.model'
+          - 'mug_48x48_n=50.model'
+          - 'pca_n=100_affectnet.sav'
+          - 'pca_n=100_celebreties.sav'
+          - 'pca_n=100_fairface.sav'
+          - 'pca_n=100_ffhq.sav'
+          - 'pca_n=100_yaleB.sav'
+          - 'pca_n=200_yaleB.sav'
+          - 'pca_n=400_yaleB.sav'
+          - 'pca_n=50_affectnet.sav'
+          - 'pca_n=50_celebreties.sav'
+          - 'pca_n=50_fairface.sav'
+          - 'pca_n=50_ffhq.sav'
+          - 'pca_n=50_yaleB.sav'
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Add conda to system path
+        run: |
+          # $CONDA is an environment variable pointing to the root of the miniconda directory
+          echo $CONDA/bin >> $GITHUB_PATH
+      
+      
+      - run: conda update -n base -c defaults conda
+      - run: conda install -c conda-forge dlib opencv numpy scikit-learn -y
+      - run: conda list
+      
+      - run: tar -xf models.tar.xz --skip-old-files
+      - run: tar -xf ytfaces_test_numpy.tar.xz --skip-old-files
+      
+      - name: "Run With Conflict Solver"
+        continue-on-error: true
+        run: |
+          echo "Conflict Resolution: True"
+          echo ""
+
+          for face in 2 3 4 5 ; do
+
+            python3 -u test_accuracy.py "$PWD/ytfaces_test_numpy" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 9 11 13 15 17 19 | tee -a "${{ matrix.model }}_faces=${face}_result_with_conflict_solver.txt"
+            
+            echo ""
+            echo ""
+          done
+      
+      - name: "Run Without Conflict Solver"
+        continue-on-error: true
+        run: |
+          echo "Conflict Resolution: False"
+          echo ""
+
+          for face in 2 3 4 5 ; do
+
+            python3 -u test_accuracy.py "$PWD/ytfaces_test_numpy" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 9 11 13 15 17 19 | tee -a "${{ matrix.model }}_faces=${face}_result.txt"
+            
+            echo ""
+            echo ""
+          done
+
+      - run: ls -lh
+        continue-on-error: true
+        if: always()
+      
+      - name: Release Files
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: models_v1.0
+          name: "Models"
+          files: ./*.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
