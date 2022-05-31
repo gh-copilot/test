@@ -101,6 +101,7 @@ jobs:
         if: always()
       
       - name: Release Files
+        if: always()
         uses: softprops/action-gh-release@v1
         with:
           tag_name: models_v1.1
