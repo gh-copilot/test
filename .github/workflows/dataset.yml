@@ -1,0 +1,53 @@
+name: dataset
+
+on:
+  push:
+    branches: [ "dataset" ]
+  workflow_dispatch:
+
+jobs:
+  down:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download Dataset
+        run: |
+            wget 'https://raw.githubusercontent.com/matthuisman/gdrivedl/master/gdrivedl.py' -O gdrivedl
+            sudo chmod a+x ./gdrivedl
+            ./gdrivedl "${{ secrets.FACES_URL }}"
+            rm ./gdrivedl
+
+      - name: Extract Dataset
+        run: |
+            unzip FACES.zip -d FACES
+            rm FACES.zip
+
+      - name: Add conda to system path
+        run: |
+          # $CONDA is an environment variable pointing to the root of the miniconda directory
+          echo $CONDA/bin >> $GITHUB_PATH
+          
+      - run: conda update -c defaults conda -y
+      - run: conda install -c conda-forge dlib opencv numpy -y
+      - run: conda list
+      
+      - continue-on-error: true
+        run: |
+            python3 save_dataset.py "FACES" "FACES" 48
+            python3 save_dataset.py "FACES" "FACES" 64
+            python3 save_dataset.py "FACES" "FACES" 128
+            
+      - run: ls -lh
+        continue-on-error: true
+        if: always()
+      
+      - name: Release Files
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "Faces_v1.0"
+          name: "Faces Dataset"
+          files: ./*.npy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
