@@ -24,21 +24,27 @@ jobs:
       fail-fast: false
       matrix:
         model: 
-          - 'mug_48x48_n=50.model'
-          - 'pca_n=50_affectnet.sav'
-          - 'pca_n=50_celebreties.sav'
-          - 'pca_n=50_fairface.sav'
-          - 'pca_n=50_ffhq.sav'
-          - 'pca_n=50_yaleB.sav'
+          - 'FACES_48x48_n=50.model'
+          - 'FEI_48x48_n=50.model'
+          - 'FEI_frontal_48x48_n=50.model'
+#           - 'mug_48x48_n=50.model'
+#           - 'pca_n=50_affectnet.sav'
+#           - 'pca_n=50_celebreties.sav'
+#           - 'pca_n=50_fairface.sav'
+#           - 'pca_n=50_ffhq.sav'
+#           - 'pca_n=50_yaleB.sav'
           
-          - 'mug_48x48_n=100.model'
-          - 'pca_n=100_affectnet.sav'
-          - 'pca_n=100_celebreties.sav'
-          - 'pca_n=100_fairface.sav'
-          - 'pca_n=100_ffhq.sav'
-          - 'pca_n=100_yaleB.sav'
-          - 'pca_n=200_yaleB.sav'
-          - 'pca_n=400_yaleB.sav'
+          - 'FACES_48x48_n=100.model'
+          - 'FEI_48x48_n=100.model'
+          - 'FEI_frontal_48x48_n=100.model'
+#           - 'mug_48x48_n=100.model'
+#           - 'pca_n=100_affectnet.sav'
+#           - 'pca_n=100_celebreties.sav'
+#           - 'pca_n=100_fairface.sav'
+#           - 'pca_n=100_ffhq.sav'
+#           - 'pca_n=100_yaleB.sav'
+#           - 'pca_n=200_yaleB.sav'
+#           - 'pca_n=400_yaleB.sav'
         
         faces:
           - "2 3 4"
@@ -62,7 +68,7 @@ jobs:
       - run: conda install -c conda-forge dlib opencv numpy scikit-learn ipython -y
       - run: conda list
       
-      - run: tar -xf models.tar.xz --skip-old-files
+      - run: tar -xvf models.tar.xz --skip-old-files
       - run: tar -xf ytfaces_test_numpy.tar.xz --skip-old-files
       
       - name: "Run With Conflict Solver"
