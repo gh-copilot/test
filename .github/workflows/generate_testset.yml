@@ -138,11 +138,6 @@ jobs:
           mkdir "${{ matrix.name }}"
           ffmpeg -i "${{ matrix.name }}.mp4" "./${{ matrix.name }}/%05d.png"
 
-      - name: Compress Images
-        run: |
-          7z a "${{ matrix.name }}.zip" "${{ matrix.name }}"
-          7z a "${{ matrix.name }}.7z" "${{ matrix.name }}"
-
       - name: Add conda to system path
         run: |
           # $CONDA is an environment variable pointing to the root of the miniconda directory
@@ -159,7 +154,13 @@ jobs:
 #             python3 save_dataset.py "FACES" "FACES" 48
 #             python3 save_dataset.py "FACES" "FACES" 64
 #             python3 save_dataset.py "FACES" "FACES" 128
-      
+
+
+      - name: Compress Images
+        run: |
+          7z a "${{ matrix.name }}.zip" "${{ matrix.name }}"
+          7z a "${{ matrix.name }}.7z"  "${{ matrix.name }}"
+
       - run: ls -lRh
         continue-on-error: true
         if: always()
