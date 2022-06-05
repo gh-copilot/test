@@ -135,8 +135,9 @@ jobs:
 
       - name: Extract Frames
         run: |
+          # -vf fps=3/1 means extract 3 frames each one second
           mkdir "${{ matrix.name }}"
-          ffmpeg -i "${{ matrix.name }}.mp4" "./${{ matrix.name }}/%05d.png"
+          ffmpeg -i "${{ matrix.name }}.mp4" -vf fps=3/1 "./${{ matrix.name }}/%05d.png"
 
       - name: Add conda to system path
         run: |
@@ -150,7 +151,7 @@ jobs:
       - run: python3 save_dataset_images.py "${{ matrix.name }}"
 
       - name: Compress Images
-        run: 7z a "${{ matrix.name }}.zip" "${{ matrix.name }}"
+        run: 7z a "${{ matrix.name }}.7z" "${{ matrix.name }}"
 
       - run: ls -lRh
         continue-on-error: true
@@ -163,6 +164,6 @@ jobs:
           name: "Testset"
           files: |
             *.mp4
-            *.zip
+            *.7z
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
