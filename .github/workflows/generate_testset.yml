@@ -129,32 +129,38 @@ jobs:
         run: yt-dlp -f 137 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}" || yt-dlp -f 399 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}"
 
       - name: Trim Video
-        run:  ffmpeg -i "${{ matrix.name }}.mp4" -ss "${{ matrix.start }}" -to "${{ matrix.end }}" -c copy "${{ matrix.name }}_out.mp4"
+        run: |
+          ffmpeg -i "${{ matrix.name }}.mp4" -ss "${{ matrix.start }}" -to "${{ matrix.end }}" -c copy "${{ matrix.name }}_out.mp4"
+          mv "${{ matrix.name }}_out.mp4" "${{ matrix.name }}.mp4"
 
       - name: Extract Frames
         run: |
-          mkdir images
-          ffmpeg -i "${{ matrix.name }}_out.mp4" "./images/%05d.png"
+          mkdir "${{ matrix.name }}"
+          ffmpeg -i "${{ matrix.name }}.mp4" "./${{ matrix.name }}/%05d.png"
 
       - name: Compress Images
-        run: 7z a images.zip images
+        run: |
+          7z a "${{ matrix.name }}.zip" "${{ matrix.name }}"
+          7z a "${{ matrix.name }}.7z" "${{ matrix.name }}"
 
-#       - name: Add conda to system path
-#         run: |
-#           # $CONDA is an environment variable pointing to the root of the miniconda directory
-#           echo $CONDA/bin >> $GITHUB_PATH
+      - name: Add conda to system path
+        run: |
+          # $CONDA is an environment variable pointing to the root of the miniconda directory
+          echo $CONDA/bin >> $GITHUB_PATH
           
-#       - run: conda update -c defaults conda -y
-#       - run: conda install -c conda-forge dlib opencv numpy -y
-#       - run: conda list
+      - run: conda update -c defaults conda -y
+      - run: conda install -c conda-forge dlib opencv numpy -y
+      - run: conda list
       
+      - run: python3 save_dataset_images.py "${{ matrix.name }}"
+
 #       - continue-on-error: true
 #         run: |
 #             python3 save_dataset.py "FACES" "FACES" 48
 #             python3 save_dataset.py "FACES" "FACES" 64
 #             python3 save_dataset.py "FACES" "FACES" 128
       
-      - run: ls -lh
+      - run: ls -lRh
         continue-on-error: true
         if: always()
       
@@ -166,5 +172,6 @@ jobs:
           files: |
             *.mp4
             *.zip
+            *.7z
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
