@@ -1,0 +1,170 @@
+name: generate_testset
+
+on:
+  push:
+    branches: [ "testset" ]
+  workflow_dispatch:
+
+jobs:
+  down:
+    runs-on: ubuntu-latest
+    name: "Generate ${{ matrix.name }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Eman_El_Emam 
+            url: 'https://www.youtube.com/watch?v=HrTrnXQ7zCY'
+            start: '0:05:20'
+            end: '0:07:10'
+
+#           - name: Lamis_El_Hadedy 
+#             url: 'https://www.youtube.com/watch?v=3jDJOJgtylc'
+#             start: '0:01:50'
+#             end: '0:02:40'
+
+#           - name: Radwa_El_Sherbiny 
+#             url: 'https://www.youtube.com/watch?v=6O4vZpdhN2A'
+#             start: '0:00:00'
+#             end: '0:01:00'
+
+#           - name: Aya_Shoaib 
+#             url: 'https://www.youtube.com/watch?v=rRJ_A2o6Vs8'
+#             start: '0:03:10'
+#             end: '0:04:10'
+
+#           - name: Shahd_Naser 
+#             url: 'https://www.youtube.com/watch?v=W7VVM0xS5EE'
+#             start: ':00:00 '
+#             end: ':00:55'
+
+#           - name: Lobna_Asal 
+#             url: 'https://www.youtube.com/watch?v=LFgXfQBRT78'
+#             start: '0:02:45'
+#             end: '0:03:20'
+
+#           - name: Egychology 
+#             url: 'https://www.youtube.com/watch?v=5GrudQD6SDw'
+#             start: '0:07:30'
+#             end: '0:08:50'
+
+#           - name: Ali_Mohamed_Ali 
+#             url: 'https://www.youtube.com/watch?v=eqFR5kFKdOs'
+#             start: '0:02:20'
+#             end: '0:04:00'
+
+#           - name: MahmoudIsmailTV 
+#             url: 'https://www.youtube.com/watch?v=3VfbBikmS5Q'
+#             start: '0:11:00'
+#             end: '0:12:05'
+
+#           - name: Droos_Online 
+#             url: 'https://www.youtube.com/watch?v=-QiTN3QJ-2s'
+#             start: '0:05:10'
+#             end: '00:06:20'
+
+#           - name: Mokhbir_Eqtisadi 
+#             url: 'https://www.youtube.com/watch?v=cQXF2vQF5yY'
+#             start: '0:00:00'
+#             end: '0:01:20'
+
+#           - name: Osama_El_Zero
+#             url: 'https://www.youtube.com/watch?v=-jYdV3mjfhs'
+#             start: '0:00:0'
+#             end: '0:02:00'
+
+#           - name: Film_Gamed 
+#             url: 'https://www.youtube.com/watch?v=FG2NlWOSJZk'
+#             start: '0:00:45'
+#             end: '0:02:00'
+
+#           - name: Ahmed_Behery 
+#             url: 'https://www.youtube.com/watch?v=pND7acbpwuw'
+#             start: '0:10:00'
+#             end: '0:11:30'
+
+#           - name: Amr_Adeeb 
+#             url: 'https://www.youtube.com/watch?v=ILVNUKObFww'
+#             start: '0:00:00'
+#             end: '0:01:20'
+
+#           - name: zAmericanEnglish 
+#             url: 'https://www.youtube.com/watch?v=WIBJi_u5xPw'
+#             start: '0:25:00'
+#             end: '0:02:00'
+
+#           - name: Yasser_Mamdouh 
+#             url: 'https://www.youtube.com/watch?v=KxcB35BUkGM'
+#             start: '0:02:00'
+#             end: '0:03:30'
+
+#           - name: El_Zatoona 
+#             url: 'https://www.youtube.com/watch?v=1KVwRAWlnDk'
+#             start: '0:02:00'
+#             end: '0:03:20'
+
+#           - name: Pharmastan 
+#             url: 'https://www.youtube.com/watch?v=fsqI3gng7is'
+#             start: '0:04:20'
+#             end: '0:06:00'
+
+#           - name: Omar_Abd_Elkafy 
+#             url: 'https://www.youtube.com/watch?v=ttzQXF6snmg'
+#             start: '0:01:20'
+#             end: '0:03:00'
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install Dependencies
+        run: |
+            sudo apt update
+            sudo apt install aria2 ffmpeg python3-mutagen python3-pycryptodome p7zip-full
+            sudo wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/bin/yt-dlp
+            sudo chmod a+rx /usr/bin/yt-dlp
+
+      - name: Download Video
+        run: yt-dlp -f 137 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}" || yt-dlp -f 399 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}"
+
+      - name: Trim Video
+        run:  ffmpeg -i "${{ matrix.name }}.mp4" -ss "${{ matrix.start }}" -to "${{ matrix.end }}" -c copy "${{ matrix.name }}_out.mp4"
+
+      - name: Extract Frames
+        run: |
+          mkdir images
+          ffmpeg -i "${{ matrix.name }}_out.mp4" "./images/%05d.png"
+
+      - name: Compress Images
+        run: 7z a images.zip images
+
+#       - name: Add conda to system path
+#         run: |
+#           # $CONDA is an environment variable pointing to the root of the miniconda directory
+#           echo $CONDA/bin >> $GITHUB_PATH
+          
+#       - run: conda update -c defaults conda -y
+#       - run: conda install -c conda-forge dlib opencv numpy -y
+#       - run: conda list
+      
+#       - continue-on-error: true
+#         run: |
+#             python3 save_dataset.py "FACES" "FACES" 48
+#             python3 save_dataset.py "FACES" "FACES" 64
+#             python3 save_dataset.py "FACES" "FACES" 128
+      
+      - run: ls -lh
+        continue-on-error: true
+        if: always()
+      
+      - name: Release Files
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "testset_v1.0"
+          name: "Testset"
+          files: |
+            *.mp4
+            *.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
