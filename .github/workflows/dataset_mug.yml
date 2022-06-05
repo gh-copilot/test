@@ -11,19 +11,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arr: [ "001", "002", "006" ]
+        arr: [ "001 002" ]
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-      - name: Add conda to system path
-        run: |
-          # $CONDA is an environment variable pointing to the root of the miniconda directory
-          echo $CONDA/bin >> $GITHUB_PATH
+#       - name: Add conda to system path
+#         run: |
+#           # $CONDA is an environment variable pointing to the root of the miniconda directory
+#           echo $CONDA/bin >> $GITHUB_PATH
       
-      - run: conda update -c defaults conda -y
-      - run: conda install -c conda-forge scikit-learn dlib opencv numpy -y
+#       - run: conda update -c defaults conda -y
+#       - run: conda install -c conda-forge scikit-learn dlib opencv numpy -y
       
       - run: sudo apt update && sudo apt install p7zip-full ffmpeg aria2 -y
       
@@ -41,7 +41,7 @@ jobs:
             
             mkdir "${file}_images"
             mkdir "${file}_videos"
-            find . -type f -iname *.avi -exec ffmpeg -i {} "./${file}_images/${file}_%05d.png"
+            find . -type f -iname *.avi -exec ffmpeg -i {} "./${file}_images/${file}_%05d.png" \;
             
             echo "==================================================================================="
           done
