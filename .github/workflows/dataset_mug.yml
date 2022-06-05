@@ -1,0 +1,64 @@
+name: dataset_mug
+
+on:
+  push:
+    branches: [ "dataset" ]
+  workflow_dispatch:
+
+jobs:
+  down:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arr: [ "001", "002", "006" ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Add conda to system path
+        run: |
+          # $CONDA is an environment variable pointing to the root of the miniconda directory
+          echo $CONDA/bin >> $GITHUB_PATH
+      
+      - run: conda update -c defaults conda -y
+      - run: conda install -c conda-forge scikit-learn dlib opencv numpy -y
+      
+      - run: sudo apt update && sudo apt install p7zip-full ffmpeg aria2 -y
+      
+      - continue-on-error: true
+        run: |
+          # Split string by spaces and create files array
+          read -r -a files <<< "${{ matrix.arr }}"
+          
+          for file in "${files[@]}" ; do
+            aria2c "${{ secrets.MUG_URL }}/${file}.tar"
+            tar -xf "${file}".tar
+            rm "${file}".tar
+
+            echo "==================================================================================="
+            
+            mkdir "${file}_images"
+            mkdir "${file}_videos"
+            find . -type f -iname *.avi -exec ffmpeg -i {} "./${file}_images/${file}_%05d.png"
+            
+            echo "==================================================================================="
+          done
+
+      - run: ls -lRh
+        continue-on-error: true
+        if: always()
+      
+      - run: du -sh * | sort -h
+        continue-on-error: true
+        if: always()
+
+#       - name: Release Files
+#         uses: softprops/action-gh-release@v1
+#         with:
+#           tag_name: "MUG_Videos_1.0"
+#           name: "MUG Videos Dataset"
+#           files: ./*.npy
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
