@@ -20,9 +20,10 @@ env:
 jobs:
   prepare_arab_dataset:
     runs-on: ubuntu-latest
-    if: ${{ env.TESTSET == 'arab' }}
+    
     steps:
       - name: Download Arab dataset
+        if: ${{ env.TESTSET == 'arab' }}
         uses: robinraju/release-downloader@v1.3
         with:
           tag: "testset_numpy_v1.0"
@@ -33,6 +34,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Extract Arab dataset
+        if: ${{ env.TESTSET == 'arab' }}
         run: |
           cd testset
           rm -v testset_complete.7z || echo ""
@@ -43,9 +45,11 @@ jobs:
           done
       
       - name: Compress whole Arab dataset
+        if: ${{ env.TESTSET == 'arab' }}
         run: 7z a testset_complete.7z testset
 
       - name: Release Files
+        if: ${{ env.TESTSET == 'arab' }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: "testset_numpy_v1.0"
