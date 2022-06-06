@@ -35,8 +35,8 @@ jobs:
 
           - name: Shahd_Naser 
             url: 'https://www.youtube.com/watch?v=W7VVM0xS5EE'
-            start: ':00:00 '
-            end: ':00:55'
+            start: '0:00:00'
+            end: '0:00:55'
 
           - name: Lobna_Asal 
             url: 'https://www.youtube.com/watch?v=LFgXfQBRT78'
@@ -90,7 +90,7 @@ jobs:
 
           - name: zAmericanEnglish 
             url: 'https://www.youtube.com/watch?v=WIBJi_u5xPw'
-            start: '0:25:00'
+            start: '0:00:25'
             end: '0:02:00'
 
           - name: Yasser_Mamdouh 
