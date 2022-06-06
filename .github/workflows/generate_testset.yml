@@ -136,8 +136,8 @@ jobs:
       - name: Extract Frames
         run: |
           # -vf fps=3/1 means extract 3 frames each one second
-          mkdir "${{ matrix.name }}"
-          ffmpeg -i "${{ matrix.name }}.mp4" -vf fps=3/1 "./${{ matrix.name }}/%05d.png"
+          mkdir "${{ matrix.name }}_frames"
+          ffmpeg -i "${{ matrix.name }}.mp4" -vf fps=3/1 "./${{ matrix.name }}_frames/%05d.png"
 
       - name: Add conda to system path
         run: |
@@ -148,10 +148,16 @@ jobs:
       - run: conda install -c conda-forge dlib opencv numpy -y
       - run: conda list
       
-      - run: python3 save_dataset_images.py "${{ matrix.name }}"
+      - run: |
+          mkdir "${{ matrix.name }}_faces"
+          mkdir "${{ matrix.name }}_numpy"
+          python3 save_dataset_images.py "${{ matrix.name }}_frames" "${{ matrix.name }}_faces" "${{ matrix.name }}_numpy"
 
       - name: Compress Images
-        run: 7z a "${{ matrix.name }}.7z" "${{ matrix.name }}"
+        run: |
+            7z a "${{ matrix.name }}_frames.7z" "${{ matrix.name }}_frames"
+            7z a "${{ matrix.name }}_faces.7z" "${{ matrix.name }}_faces"
+            7z a "${{ matrix.name }}_numpy.7z" "${{ matrix.name }}_numpy"
 
       - run: ls -lRh
         continue-on-error: true
