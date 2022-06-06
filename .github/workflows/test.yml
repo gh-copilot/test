@@ -20,7 +20,7 @@ env:
 jobs:
   prepare_arab_dataset:
     runs-on: ubuntu-latest
-    if: contains(${{ env.TESTSET }}, 'arab')
+    if: env.TESTSET == 'arab'
     steps:
       - name: Download Arab dataset
         uses: robinraju/release-downloader@v1.3
@@ -107,13 +107,13 @@ jobs:
       - run: tar -xvf models.tar.xz --skip-old-files
       
       - name: Extract ytfaces dataset
-        if: ${{ env.TESTSET == 'ytfaces' }}
+        if: env.TESTSET == 'ytfaces'
         run: |
           tar -xf ytfaces_test_numpy.tar.xz --skip-old-files
           mv ytfaces_test_numpy testset
 
       - name: Download Arab dataset
-        if: ${{ env.TESTSET == 'arab' }}
+        if: env.TESTSET == 'arab'
         uses: robinraju/release-downloader@v1.3
         with:
           tag: "testset_numpy_v1.0"
@@ -123,7 +123,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract arab dataset
-        if: ${{ env.TESTSET == 'arab' }}
+        if: env.TESTSET == 'arab'
         run: 7z x testset_complete.7z
 
       - name: List testset files
