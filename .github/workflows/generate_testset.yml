@@ -8,7 +8,7 @@ on:
 jobs:
   down:
     runs-on: ubuntu-latest
-    name: "Generate ${{ matrix.name }}"
+    name: "${{ matrix.name }}"
     strategy:
       fail-fast: false
       matrix:
@@ -148,10 +148,15 @@ jobs:
       - run: conda install -c conda-forge dlib opencv numpy -y
       - run: conda list
       
-      - run: |
+      - name: Process Dataset
+        run: |
           mkdir "${{ matrix.name }}_faces"
           mkdir "${{ matrix.name }}_numpy"
-          python3 save_dataset_images.py "${{ matrix.name }}_frames" "${{ matrix.name }}_faces" "${{ matrix.name }}_numpy"
+          
+          python3 save_dataset_images.py \
+              --dataset "${{ matrix.name }}_frames" \
+              --output "${{ matrix.name }}_faces" \
+              --numpy_output "${{ matrix.name }}_numpy"
 
       - name: Compress Images
         run: |
@@ -171,5 +176,14 @@ jobs:
           files: |
             *.mp4
             *.7z
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release Files
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "testset_numpy_v1.0"
+          name: "Testset Numpy"
+          files: "*_numpy.7z"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
