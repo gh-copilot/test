@@ -7,11 +7,25 @@ import os
 import dlib
 import sys
 from datetime import datetime
+import argparse
+import traceback
+
+
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--dataset', type=str, required=True)
+    parser.add_argument('--output', type=str, required=True)
+    parser.add_argument('--numpy_output', type=str, required=True)
+    parser.add_argument('--size', type=int, default=45)
+    return parser.parse_args()
+
+
+args = get_args()
 
 face_detector = dlib.get_frontal_face_detector()
 
 np.random.seed(42)
-SELECTED_SIZE = 45
+SELECTED_SIZE = args.size + 5
 
 
 def load_dataset(path_to_dataset, output_path, numpy_output_path):
@@ -35,11 +49,21 @@ def load_dataset(path_to_dataset, output_path, numpy_output_path):
 
         except Exception as e:
             print(f"ERROR at '{path}'", e)
+            traceback.print_exc()
         
     print('Finished saving dataset.')
 
 
+def filter_numpy_dataset(numpy_output_path):
+    files = list(os.listdir(numpy_output_path))
+    random_files = np.random.choice(files, size=args.size, replace=False)
+    for file in files:
+        if file not in random_files:
+            os.remove(os.path.join(numpy_output_path, file))
+
+
 start = datetime.now()
-print(f"Loading dataset {sys.argv[1]}")
-load_dataset(sys.argv[1], sys.argv[2], sys.argv[3])
+print(f"Loading dataset {args.dataset}")
+load_dataset(args.dataset, args.output, args.numpy_output)
+filter_numpy_dataset(args.numpy_output)
 print(f"Time Taken: {datetime.now() - start}")
