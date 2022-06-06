@@ -67,26 +67,26 @@ jobs:
       matrix:
         model: 
           - 'FACES_48x48_n=50.model'
-#           - 'FEI_48x48_n=50.model'
-#           - 'FEI_frontal_48x48_n=50.model'
-#           - 'mug_48x48_n=50.model'
-#           - 'pca_n=50_affectnet.sav'
-#           - 'pca_n=50_celebreties.sav'
-#           - 'pca_n=50_fairface.sav'
-#           - 'pca_n=50_ffhq.sav'
-#           - 'pca_n=50_yaleB.sav'
+          - 'FEI_48x48_n=50.model'
+          - 'FEI_frontal_48x48_n=50.model'
+          - 'mug_48x48_n=50.model'
+          - 'pca_n=50_affectnet.sav'
+          - 'pca_n=50_celebreties.sav'
+          - 'pca_n=50_fairface.sav'
+          - 'pca_n=50_ffhq.sav'
+          - 'pca_n=50_yaleB.sav'
           
-#           - 'FACES_48x48_n=100.model'
-#           - 'FEI_48x48_n=100.model'
-#           - 'FEI_frontal_48x48_n=100.model'
-#           - 'mug_48x48_n=100.model'
-#           - 'pca_n=100_affectnet.sav'
-#           - 'pca_n=100_celebreties.sav'
-#           - 'pca_n=100_fairface.sav'
-#           - 'pca_n=100_ffhq.sav'
-#           - 'pca_n=100_yaleB.sav'
-#           - 'pca_n=200_yaleB.sav'
-#           - 'pca_n=400_yaleB.sav'
+          - 'FACES_48x48_n=100.model'
+          - 'FEI_48x48_n=100.model'
+          - 'FEI_frontal_48x48_n=100.model'
+          - 'mug_48x48_n=100.model'
+          - 'pca_n=100_affectnet.sav'
+          - 'pca_n=100_celebreties.sav'
+          - 'pca_n=100_fairface.sav'
+          - 'pca_n=100_ffhq.sav'
+          - 'pca_n=100_yaleB.sav'
+          - 'pca_n=200_yaleB.sav'
+          - 'pca_n=400_yaleB.sav'
         
         faces:
           - "2 3 4"
@@ -147,7 +147,7 @@ jobs:
           IFS=', ' read -r -a faces <<< "${{ matrix.faces }}"
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 9 11 13 15 17 19 21 | tee -a "${{ matrix.model }}_faces=${face}_result_with_conflict_solver.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 | tee -a "${{ matrix.model }}_faces=${face}_result_with_conflict_solver.txt"
             
             echo ""
             echo ""
@@ -162,7 +162,7 @@ jobs:
           IFS=', ' read -r -a faces <<< "${{ matrix.faces }}"
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 9 11 13 15 17 19 21 | tee -a "${{ matrix.model }}_faces=${face}_result.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 | tee -a "${{ matrix.model }}_faces=${face}_result.txt"
             
             echo ""
             echo ""
