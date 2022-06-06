@@ -18,100 +18,100 @@ jobs:
             start: '0:05:20'
             end: '0:07:10'
 
-#           - name: Lamis_El_Hadedy 
-#             url: 'https://www.youtube.com/watch?v=3jDJOJgtylc'
-#             start: '0:01:50'
-#             end: '0:02:40'
+          - name: Lamis_El_Hadedy 
+            url: 'https://www.youtube.com/watch?v=3jDJOJgtylc'
+            start: '0:01:50'
+            end: '0:02:40'
 
-#           - name: Radwa_El_Sherbiny 
-#             url: 'https://www.youtube.com/watch?v=6O4vZpdhN2A'
-#             start: '0:00:00'
-#             end: '0:01:00'
+          - name: Radwa_El_Sherbiny 
+            url: 'https://www.youtube.com/watch?v=6O4vZpdhN2A'
+            start: '0:00:00'
+            end: '0:01:00'
 
-#           - name: Aya_Shoaib 
-#             url: 'https://www.youtube.com/watch?v=rRJ_A2o6Vs8'
-#             start: '0:03:10'
-#             end: '0:04:10'
+          - name: Aya_Shoaib 
+            url: 'https://www.youtube.com/watch?v=rRJ_A2o6Vs8'
+            start: '0:03:10'
+            end: '0:04:10'
 
-#           - name: Shahd_Naser 
-#             url: 'https://www.youtube.com/watch?v=W7VVM0xS5EE'
-#             start: ':00:00 '
-#             end: ':00:55'
+          - name: Shahd_Naser 
+            url: 'https://www.youtube.com/watch?v=W7VVM0xS5EE'
+            start: ':00:00 '
+            end: ':00:55'
 
-#           - name: Lobna_Asal 
-#             url: 'https://www.youtube.com/watch?v=LFgXfQBRT78'
-#             start: '0:02:45'
-#             end: '0:03:20'
+          - name: Lobna_Asal 
+            url: 'https://www.youtube.com/watch?v=LFgXfQBRT78'
+            start: '0:02:45'
+            end: '0:03:20'
 
-#           - name: Egychology 
-#             url: 'https://www.youtube.com/watch?v=5GrudQD6SDw'
-#             start: '0:07:30'
-#             end: '0:08:50'
+          - name: Egychology 
+            url: 'https://www.youtube.com/watch?v=5GrudQD6SDw'
+            start: '0:07:30'
+            end: '0:08:50'
 
-#           - name: Ali_Mohamed_Ali 
-#             url: 'https://www.youtube.com/watch?v=eqFR5kFKdOs'
-#             start: '0:02:20'
-#             end: '0:04:00'
+          - name: Ali_Mohamed_Ali 
+            url: 'https://www.youtube.com/watch?v=eqFR5kFKdOs'
+            start: '0:02:20'
+            end: '0:04:00'
 
-#           - name: MahmoudIsmailTV 
-#             url: 'https://www.youtube.com/watch?v=3VfbBikmS5Q'
-#             start: '0:11:00'
-#             end: '0:12:05'
+          - name: MahmoudIsmailTV 
+            url: 'https://www.youtube.com/watch?v=3VfbBikmS5Q'
+            start: '0:11:00'
+            end: '0:12:05'
 
-#           - name: Droos_Online 
-#             url: 'https://www.youtube.com/watch?v=-QiTN3QJ-2s'
-#             start: '0:05:10'
-#             end: '00:06:20'
+          - name: Droos_Online 
+            url: 'https://www.youtube.com/watch?v=-QiTN3QJ-2s'
+            start: '0:05:10'
+            end: '00:06:20'
 
-#           - name: Mokhbir_Eqtisadi 
-#             url: 'https://www.youtube.com/watch?v=cQXF2vQF5yY'
-#             start: '0:00:00'
-#             end: '0:01:20'
+          - name: Mokhbir_Eqtisadi 
+            url: 'https://www.youtube.com/watch?v=cQXF2vQF5yY'
+            start: '0:00:00'
+            end: '0:01:20'
 
-#           - name: Osama_El_Zero
-#             url: 'https://www.youtube.com/watch?v=-jYdV3mjfhs'
-#             start: '0:00:0'
-#             end: '0:02:00'
+          - name: Osama_El_Zero
+            url: 'https://www.youtube.com/watch?v=-jYdV3mjfhs'
+            start: '0:00:0'
+            end: '0:02:00'
 
-#           - name: Film_Gamed 
-#             url: 'https://www.youtube.com/watch?v=FG2NlWOSJZk'
-#             start: '0:00:45'
-#             end: '0:02:00'
+          - name: Film_Gamed 
+            url: 'https://www.youtube.com/watch?v=FG2NlWOSJZk'
+            start: '0:00:45'
+            end: '0:02:00'
 
-#           - name: Ahmed_Behery 
-#             url: 'https://www.youtube.com/watch?v=pND7acbpwuw'
-#             start: '0:10:00'
-#             end: '0:11:30'
+          - name: Ahmed_Behery 
+            url: 'https://www.youtube.com/watch?v=pND7acbpwuw'
+            start: '0:10:00'
+            end: '0:11:30'
 
-#           - name: Amr_Adeeb 
-#             url: 'https://www.youtube.com/watch?v=ILVNUKObFww'
-#             start: '0:00:00'
-#             end: '0:01:20'
+          - name: Amr_Adeeb 
+            url: 'https://www.youtube.com/watch?v=ILVNUKObFww'
+            start: '0:00:00'
+            end: '0:01:20'
 
-#           - name: zAmericanEnglish 
-#             url: 'https://www.youtube.com/watch?v=WIBJi_u5xPw'
-#             start: '0:25:00'
-#             end: '0:02:00'
+          - name: zAmericanEnglish 
+            url: 'https://www.youtube.com/watch?v=WIBJi_u5xPw'
+            start: '0:25:00'
+            end: '0:02:00'
 
-#           - name: Yasser_Mamdouh 
-#             url: 'https://www.youtube.com/watch?v=KxcB35BUkGM'
-#             start: '0:02:00'
-#             end: '0:03:30'
+          - name: Yasser_Mamdouh 
+            url: 'https://www.youtube.com/watch?v=KxcB35BUkGM'
+            start: '0:02:00'
+            end: '0:03:30'
 
-#           - name: El_Zatoona 
-#             url: 'https://www.youtube.com/watch?v=1KVwRAWlnDk'
-#             start: '0:02:00'
-#             end: '0:03:20'
+          - name: El_Zatoona 
+            url: 'https://www.youtube.com/watch?v=1KVwRAWlnDk'
+            start: '0:02:00'
+            end: '0:03:20'
 
-#           - name: Pharmastan 
-#             url: 'https://www.youtube.com/watch?v=fsqI3gng7is'
-#             start: '0:04:20'
-#             end: '0:06:00'
+          - name: Pharmastan 
+            url: 'https://www.youtube.com/watch?v=fsqI3gng7is'
+            start: '0:04:20'
+            end: '0:06:00'
 
-#           - name: Omar_Abd_Elkafy 
-#             url: 'https://www.youtube.com/watch?v=ttzQXF6snmg'
-#             start: '0:01:20'
-#             end: '0:03:00'
+          - name: Omar_Abd_Elkafy 
+            url: 'https://www.youtube.com/watch?v=ttzQXF6snmg'
+            start: '0:01:20'
+            end: '0:03:00'
 
 
     steps:
@@ -130,7 +130,7 @@ jobs:
 
       - name: Trim Video
         run: |
-          ffmpeg -i "${{ matrix.name }}.mp4" -ss "${{ matrix.start }}" -to "${{ matrix.end }}" -c:v libx264 -crf 28 "${{ matrix.name }}_out.mp4"
+          ffmpeg -i "${{ matrix.name }}.mp4" -ss "${{ matrix.start }}" -to "${{ matrix.end }}" -c copy "${{ matrix.name }}_out.mp4"
           mv "${{ matrix.name }}_out.mp4" "${{ matrix.name }}.mp4"
 
       - name: Extract Frames
