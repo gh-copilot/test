@@ -15,18 +15,55 @@ env:
   FORCE_COLOR : 'true' # Force colors in console output
   CI: 'true'
   TERM: 'xterm-256color'
+  TESTSET: 'arab' # or ytfaces
 
 jobs:
+  prepare_arab_dataset:
+    runs-on: ubuntu-latest
+    if: ${{ env.TESTSET == 'arab' }}
+    steps:
+      - name: Download Arab dataset
+        uses: robinraju/release-downloader@v1.3
+        with:
+          tag: "testset_numpy_v1.0"
+          fileName: "*"
+          tarBall: false
+          zipBall: false
+          out-file-path: "testset"
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract Arab dataset
+        run: |
+          cd testset
+          rm -v testset_complete.7z || echo ""
+          
+          for file in *.7z; do
+            7z x "$file"
+            rm "$file"
+          done
+      
+      - name: Compress whole Arab dataset
+        run: 7z a testset_complete.7z testset
+
+      - name: Release Files
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: "testset_numpy_v1.0"
+          name: "Testset Numpy"
+          files: "testset_complete.7z"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   Test:
-    # The type of runner that the job will run on
+    needs: [prepare_arab_dataset]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         model: 
           - 'FACES_48x48_n=50.model'
-          - 'FEI_48x48_n=50.model'
-          - 'FEI_frontal_48x48_n=50.model'
+#           - 'FEI_48x48_n=50.model'
+#           - 'FEI_frontal_48x48_n=50.model'
 #           - 'mug_48x48_n=50.model'
 #           - 'pca_n=50_affectnet.sav'
 #           - 'pca_n=50_celebreties.sav'
@@ -34,9 +71,9 @@ jobs:
 #           - 'pca_n=50_ffhq.sav'
 #           - 'pca_n=50_yaleB.sav'
           
-          - 'FACES_48x48_n=100.model'
-          - 'FEI_48x48_n=100.model'
-          - 'FEI_frontal_48x48_n=100.model'
+#           - 'FACES_48x48_n=100.model'
+#           - 'FEI_48x48_n=100.model'
+#           - 'FEI_frontal_48x48_n=100.model'
 #           - 'mug_48x48_n=100.model'
 #           - 'pca_n=100_affectnet.sav'
 #           - 'pca_n=100_celebreties.sav'
@@ -63,14 +100,37 @@ jobs:
           # $CONDA is an environment variable pointing to the root of the miniconda directory
           echo $CONDA/bin >> $GITHUB_PATH
       
-      
       - run: conda update -n base -c defaults conda
       - run: conda install -c conda-forge dlib opencv numpy scikit-learn ipython -y
       - run: conda list
       
       - run: tar -xvf models.tar.xz --skip-old-files
-      - run: tar -xf ytfaces_test_numpy.tar.xz --skip-old-files
       
+      - name: Extract ytfaces dataset
+        if: ${{ env.TESTSET == 'ytfaces' }}
+        run: |
+          tar -xf ytfaces_test_numpy.tar.xz --skip-old-files
+          mv ytfaces_test_numpy testset
+
+      - name: Download Arab dataset
+        if: ${{ env.TESTSET == 'arab' }}
+        uses: robinraju/release-downloader@v1.3
+        with:
+          tag: "testset_numpy_v1.0"
+          fileName: "testset_complete.7z"
+          tarBall: false
+          zipBall: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract arab dataset
+        if: ${{ env.TESTSET == 'arab' }}
+        run: 7z x testset_complete.7z
+
+      - name: List testset files
+        run: ls -lRh testset
+        continue-on-error: true
+        if: always()
+
       - name: "Run With Conflict Solver"
         if: ${{ matrix.conflict_solver == 'true' }}
         continue-on-error: true
@@ -81,7 +141,7 @@ jobs:
           IFS=', ' read -r -a faces <<< "${{ matrix.faces }}"
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/ytfaces_test_numpy" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 9 11 13 15 17 19 | tee -a "${{ matrix.model }}_faces=${face}_result_with_conflict_solver.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 9 11 13 15 17 19 21 | tee -a "${{ matrix.model }}_faces=${face}_result_with_conflict_solver.txt"
             
             echo ""
             echo ""
@@ -96,7 +156,7 @@ jobs:
           IFS=', ' read -r -a faces <<< "${{ matrix.faces }}"
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/ytfaces_test_numpy" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 9 11 13 15 17 19 | tee -a "${{ matrix.model }}_faces=${face}_result.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 9 11 13 15 17 19 21 | tee -a "${{ matrix.model }}_faces=${face}_result.txt"
             
             echo ""
             echo ""
@@ -110,8 +170,8 @@ jobs:
         if: always()
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: models_v1.1
-          name: "Models"
+          tag_name: "models_${{ env.TESTSET }}_v1.0"
+          name: "Models Test on ${{ env.TESTSET }} data"
           files: ./*.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
