@@ -20,7 +20,7 @@ env:
 jobs:
   prepare_arab_dataset:
     runs-on: ubuntu-latest
-    if: ${{ env.TESTSET }} == 'arab'
+    if: contains(${{ env.TESTSET }}, 'arab')
     steps:
       - name: Download Arab dataset
         uses: robinraju/release-downloader@v1.3
