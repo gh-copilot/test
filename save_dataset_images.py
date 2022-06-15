@@ -22,39 +22,80 @@ def get_args():
 
 
 args = get_args()
-
 face_detector = dlib.get_frontal_face_detector()
-
 np.random.seed(42)
-SELECTED_SIZE = args.size + 10
+
+
+def get_area(rectangle):
+    if rectangle is None:
+        return 0
+    if type(rectangle) is dlib.rectangle:
+        return (rectangle.right() - rectangle.left()) * (rectangle.bottom() - rectangle.top())
+    if type(rectangle) is np.ndarray:
+        return rectangle.shape[0] * rectangle.shape[1]
+
+
+def get_max_face(faces):
+    max_face = None
+    max_area = -1
+    for face in faces:
+        area = get_area(face)
+        if area > max_area:
+            max_area = area
+            max_face = face
+    return max_face
+
+
+def get_area_ratio(face1, face2):
+    area1 = get_area(face1)
+    area2 = get_area(face2)
+    if area1 == 0 or area2 == 0:
+        return 0
+    max_area = max(area1, area2)
+    min_area = min(area1, area2)
+    return min_area / max_area
+
+
+def reload_face(face):
+    frame_grey = np.copy(face)
+    face = get_max_face(face_detector(frame_grey, 3))
+    if face is None:
+        return frame_grey
+    face = frame_grey[face.top():face.bottom(), face.left():face.right()]
+    return face
+
+
+def load_face(file):
+    frame_grey = cv2.imread(file)
+    face = get_max_face(face_detector(frame_grey, 3))
+    face = frame_grey[face.top():face.bottom(), face.left():face.right()]
+
+    new_face = reload_face(face) if args.double else None
+    if get_area_ratio(face, new_face) > 0.5:
+        face = new_face
+
+    return face
 
 
 def load_dataset(path_to_dataset, output_path, numpy_output_path):
     path_to_dataset = os.path.join(os.getcwd(), path_to_dataset)
-    
+
     files = list(os.listdir(path_to_dataset))
-    random_files = np.random.choice(files, size=SELECTED_SIZE, replace=False)
     print(f'Dataset Size: {len(files)}')
 
     for file in files:
         path = os.path.join(path_to_dataset, file)
         try:
-            img = cv2.imread(path)
-            face = face_detector(img, 4)[0]
-            img = img[face.top():face.bottom(), face.left():face.right()]
-            if args.double:
-                face = face_detector(img, 4)[0]
-                img = img[face.top():face.bottom(), face.left():face.right()]
-            cv2.imwrite(os.path.join(output_path, file), img)
-            
-            if file in random_files:
-                img = cv2.resize(img, (48, 48)).ravel()
-                np.save(os.path.join(numpy_output_path, file), img)
+            face = load_face(path)
+            cv2.imwrite(os.path.join(output_path, file), face)
+
+            face = cv2.resize(face, (48, 48)).ravel()
+            np.save(os.path.join(numpy_output_path, file), face)
 
         except Exception as e:
             print(f"ERROR at '{path}'", e)
             traceback.print_exc()
-        
+
     print('Finished saving dataset.')
 
 
@@ -71,3 +112,5 @@ print(f"Loading dataset {args.dataset}")
 load_dataset(args.dataset, args.output, args.numpy_output)
 filter_numpy_dataset(args.numpy_output)
 print(f"Time Taken: {datetime.now() - start}")
+
+
