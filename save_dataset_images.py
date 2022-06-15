@@ -16,6 +16,7 @@ def get_args():
     parser.add_argument('--dataset', type=str, required=True)
     parser.add_argument('--output', type=str, required=True)
     parser.add_argument('--numpy_output', type=str, required=True)
+    parser.add_argument('--double', default=False, action="store_true")
     parser.add_argument('--size', type=int, default=45)
     return parser.parse_args()
 
@@ -25,7 +26,7 @@ args = get_args()
 face_detector = dlib.get_frontal_face_detector()
 
 np.random.seed(42)
-SELECTED_SIZE = args.size + 5
+SELECTED_SIZE = args.size + 10
 
 
 def load_dataset(path_to_dataset, output_path, numpy_output_path):
@@ -39,8 +40,11 @@ def load_dataset(path_to_dataset, output_path, numpy_output_path):
         path = os.path.join(path_to_dataset, file)
         try:
             img = cv2.imread(path)
-            face = face_detector(img, 0)[0]
+            face = face_detector(img, 4)[0]
             img = img[face.top():face.bottom(), face.left():face.right()]
+            if args.double:
+                face = face_detector(img, 4)[0]
+                img = img[face.top():face.bottom(), face.left():face.right()]
             cv2.imwrite(os.path.join(output_path, file), img)
             
             if file in random_files:
