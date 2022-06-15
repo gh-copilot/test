@@ -201,9 +201,12 @@ class KNNIdentification:
 
         for _ in range(min(distances.shape)):
             min_class, min_face = np.unravel_index(np.argmin(distances), distances.shape)
-            new_classes[min_face] = min_class
-            distances[min_class, :] = np.inf
-            distances[:, min_face] = np.inf
+            if distances[min_class, min_face] > self.threshold:
+                new_classes, label, faces = self.create_new_class(min_face, faces[min_face], new_classes, faces)
+            else:
+                new_classes[min_face] = min_class
+                distances[min_class, :] = np.inf
+                distances[:, min_face] = np.inf
 
         for index in np.where(new_classes == -1)[0]:
             new_classes, label, faces = self.create_new_class(index, faces[index], new_classes, faces)
