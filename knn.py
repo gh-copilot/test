@@ -270,7 +270,7 @@ class KNNIdentification:
             instead, repeat the row `1 + k//2` times to make the class probable to be chosen.
         """
 
-        print("####################### Created new class ##########################")
+        # print("####################### Created new class ##########################")
         label = self.n_classes
         classes[i] = label
         classes = np.append(classes, np.repeat(label, self.k // 2), axis=0)
