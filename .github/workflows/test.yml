@@ -89,8 +89,7 @@ jobs:
           - 'pca_n=400_yaleB.sav'
         
         faces:
-          - "2 3 4"
-          - "5"
+          - "2 3 4 5"
         conflict_solver:
           - "true"
           - "false"
