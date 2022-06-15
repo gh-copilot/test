@@ -195,6 +195,7 @@ class KNNIdentification:
         new_classes = np.full_like(classes, fill_value=-1, dtype=np.int16)
 
         distances = np.empty((self.n_classes, num_of_test_faces))
+        faces = faces[:num_of_test_faces]
         for i in range(self.n_classes):
             distances_to_class_i = np.linalg.norm(self.classes_centers[i] - faces, axis=1)
             distances[i] = distances_to_class_i
@@ -208,7 +209,7 @@ class KNNIdentification:
                 distances[min_class, :] = np.inf
                 distances[:, min_face] = np.inf
 
-        for index in np.where(new_classes == -1)[0]:
+        for index in np.where(new_classes[:num_of_test_faces] == -1)[0]:
             new_classes, label, faces = self.create_new_class(index, faces[index], new_classes, faces)
 
         return new_classes, faces
