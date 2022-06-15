@@ -175,7 +175,7 @@ jobs:
         if: always()
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "models_${{ env.TESTSET }}_v1.0"
+          tag_name: "models_${{ env.TESTSET }}_v1.1"
           name: "Models Test on ${{ env.TESTSET }} data"
           files: ./*.txt
         env:
