@@ -144,9 +144,11 @@ jobs:
           echo ""
 
           IFS=', ' read -r -a faces <<< "${{ matrix.faces }}"
+          model_name=$(echo "${{ matrix.model }}" | cut -f 1 -d '.')
+          
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 | tee -a "${{ matrix.model }}_faces=${face}_result_with_conflict_solver.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 13 | tee -a "${model_name}_result_with_conflict_solver.txt"
             
             echo ""
             echo ""
@@ -159,9 +161,11 @@ jobs:
           echo "Conflict Resolution: False"
           echo ""
           IFS=', ' read -r -a faces <<< "${{ matrix.faces }}"
+          model_name=$(echo "${{ matrix.model }}" | cut -f 1 -d '.')
+          
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 | tee -a "${{ matrix.model }}_faces=${face}_result.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 13| tee -a "${model_name}_result.txt"
             
             echo ""
             echo ""
