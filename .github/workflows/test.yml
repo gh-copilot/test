@@ -28,7 +28,7 @@ jobs:
         uses: robinraju/release-downloader@v1.3
         with:
           repository: "${{ github.repository }}"
-          tag: "testset${{ env.TESTSET_TYPE }}_v1.0"
+          tag: "testset${{ env.TESTSET_TYPE }}_numpy_v1.0"
           fileName: "*"
           tarBall: false
           zipBall: false
