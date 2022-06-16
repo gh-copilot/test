@@ -16,7 +16,7 @@ env:
   CI: 'true'
   TERM: 'xterm-256color'
   TESTSET: 'ytfaces' # or arab
-  TESTSET_TYPE: '' # or '_double' (used for arab only)
+  TESTSET_TYPE: '_single' # or '_double' (used for arab only)
 
 jobs:
   prepare_arab_dataset:
