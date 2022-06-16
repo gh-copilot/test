@@ -16,6 +16,7 @@ env:
   CI: 'true'
   TERM: 'xterm-256color'
   TESTSET: 'arab' # or ytfaces
+  TESTSET_TYPE: '_double' # or '' (used for arab only)
 
 jobs:
   prepare_arab_dataset:
@@ -27,7 +28,7 @@ jobs:
         uses: robinraju/release-downloader@v1.3
         with:
           repository: "${{ github.repository }}"
-          tag: "testset_numpy_v1.0"
+          tag: "testset${{ env.TESTSET_TYPE }}_v1.0"
           fileName: "*"
           tarBall: false
           zipBall: false
@@ -53,7 +54,7 @@ jobs:
         if: ${{ env.TESTSET == 'arab' }}
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "testset_numpy_v1.0"
+          tag_name: "testset${{ env.TESTSET_TYPE }}_numpy_v1.0"
           name: "Testset Numpy"
           files: "testset_complete.7z"
         env:
@@ -62,6 +63,7 @@ jobs:
   Test:
     needs: [prepare_arab_dataset]
     runs-on: ubuntu-latest
+    name: "${{ matrix.model }}, Conflict_Solver=${{ matrix.conflict_solver }}"
     strategy:
       fail-fast: false
       matrix:
@@ -90,6 +92,7 @@ jobs:
         
         faces:
           - "2 3 4 5"
+          
         conflict_solver:
           - "true"
           - "false"
@@ -121,7 +124,7 @@ jobs:
         uses: robinraju/release-downloader@v1.3
         with:
           repository: "${{ github.repository }}"
-          tag: "testset_numpy_v1.0"
+          tag: "testset${{ env.TESTSET_TYPE }}_numpy_v1.0"
           fileName: "testset_complete.7z"
           tarBall: false
           zipBall: false
@@ -179,8 +182,8 @@ jobs:
         if: always()
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "models_${{ env.TESTSET }}_v1.1"
-          name: "Models Test on ${{ env.TESTSET }} data"
+          tag_name: "models_${{ env.TESTSET }}${{ env.TESTSET_TYPE }}_v1.1"
+          name: "Models Test on ${{ env.TESTSET }}${{ env.TESTSET_TYPE }} data"
           files: ./*.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
