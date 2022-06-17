@@ -68,27 +68,66 @@ jobs:
       fail-fast: false
       matrix:
         model: 
-          - 'FACES_48x48_n=50.model'
-          - 'FEI_48x48_n=50.model'
-          - 'FEI_frontal_48x48_n=50.model'
-          - 'mug_48x48_n=50.model'
-          - 'pca_n=50_affectnet.sav'
-          - 'pca_n=50_celebreties.sav'
-          - 'pca_n=50_fairface.sav'
-          - 'pca_n=50_ffhq.sav'
-          - 'pca_n=50_yaleB.sav'
+          # Hybrid N = 20
+          - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+          - 'mug_0.1+FACES+Yale-FacesB_n=20.model'
+          - 'mug_0.3+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+          - 'mug_0.3+FACES+Yale-FacesB_n=20.model'
+          - 'mug_0.5+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+          - 'mug_0.5+FACES+Yale-FacesB_n=20.model'
+          - 'mug_0.8+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+          - 'mug_0.8+FACES+Yale-FacesB_n=20.model'
+          - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+          - 'mug_1.0+FACES+Yale-FacesB_n=20.model'
           
-          - 'FACES_48x48_n=100.model'
-          - 'FEI_48x48_n=100.model'
-          - 'FEI_frontal_48x48_n=100.model'
-          - 'mug_48x48_n=100.model'
-          - 'pca_n=100_affectnet.sav'
-          - 'pca_n=100_celebreties.sav'
-          - 'pca_n=100_fairface.sav'
-          - 'pca_n=100_ffhq.sav'
-          - 'pca_n=100_yaleB.sav'
-          - 'pca_n=200_yaleB.sav'
-          - 'pca_n=400_yaleB.sav'
+          # Hybrid N = 30
+          - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+          - 'mug_0.1+FACES+Yale-FacesB_n=30.model'
+          - 'mug_0.3+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+          - 'mug_0.3+FACES+Yale-FacesB_n=30.model'
+          - 'mug_0.5+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+          - 'mug_0.5+FACES+Yale-FacesB_n=30.model'
+          - 'mug_0.8+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+          - 'mug_0.8+FACES+Yale-FacesB_n=30.model'
+          - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+          - 'mug_1.0+FACES+Yale-FacesB_n=30.model'
+          
+          # Hybrid N = 50
+          - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
+          - 'mug_0.1+FACES+Yale-FacesB_n=50.model'
+          - 'mug_0.3+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
+          - 'mug_0.3+FACES+Yale-FacesB_n=50.model'
+          - 'mug_0.5+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
+          - 'mug_0.5+FACES+Yale-FacesB_n=50.model'
+          - 'mug_0.8+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
+          - 'mug_0.8+FACES+Yale-FacesB_n=50.model'
+          - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
+          - 'mug_1.0+FACES+Yale-FacesB_n=50.model'
+          
+#           # N = 50
+#           - 'FACES_48x48_n=50.model'
+#           - 'FEI_48x48_n=50.model'
+#           - 'FEI_frontal_48x48_n=50.model'
+#           - 'mug_48x48_n=50.model'
+#           - 'pca_n=50_affectnet.sav'
+#           - 'pca_n=50_celebreties.sav'
+#           - 'pca_n=50_fairface.sav'
+#           - 'pca_n=50_ffhq.sav'
+#           - 'pca_n=50_yaleB.sav'
+          
+#           # N = 100
+#           - 'FACES_48x48_n=100.model'
+#           - 'FEI_48x48_n=100.model'
+#           - 'FEI_frontal_48x48_n=100.model'
+#           - 'mug_48x48_n=100.model'
+#           - 'pca_n=100_affectnet.sav'
+#           - 'pca_n=100_celebreties.sav'
+#           - 'pca_n=100_fairface.sav'
+#           - 'pca_n=100_ffhq.sav'
+#           - 'pca_n=100_yaleB.sav'
+          
+#           - 'pca_n=200_yaleB.sav'
+#           - 'pca_n=400_yaleB.sav'
         
         faces:
           - "2 3 4 5"
