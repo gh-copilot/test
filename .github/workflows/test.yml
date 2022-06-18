@@ -186,7 +186,7 @@ jobs:
           echo ""
 
           IFS=', ' read -r -a faces <<< "${{ matrix.faces }}"
-          model_name=$(echo "${{ matrix.model }}" | cut -f 1 -d '.')
+          model_name=$(echo "${{ matrix.model }}" | rev | cut -f 2- -d '.' | rev)
           
           for face in "${faces[@]}" ; do
 
@@ -203,7 +203,7 @@ jobs:
           echo "Conflict Resolution: False"
           echo ""
           IFS=', ' read -r -a faces <<< "${{ matrix.faces }}"
-          model_name=$(echo "${{ matrix.model }}" | cut -f 1 -d '.')
+          model_name=$(echo "${{ matrix.model }}" | rev | cut -f 2- -d '.' | rev)
           
           for face in "${faces[@]}" ; do
 
