@@ -63,7 +63,7 @@ jobs:
   Test:
     needs: [prepare_arab_dataset]
     runs-on: ubuntu-latest
-    name: "${{ matrix.model }}, Conflict_Solver=${{ matrix.conflict_solver }}"
+    name: "${{ matrix.model }}, CS=${{ matrix.conflict_solver }}"
     strategy:
       fail-fast: false
       matrix:
@@ -79,19 +79,28 @@ jobs:
           - 'mug_0.8+FACES+Yale-FacesB_n=20.model'
           - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
           - 'mug_1.0+FACES+Yale-FacesB_n=20.model'
+          - 'FACES+FEI_frontal+JAFFE+TFEID+Yale-FacesB_n=20.model'
+          - 'FACES+FEI_frontal+Yale-FacesB_n=20.model'
+          - 'FACES+Yale-FacesB_n=20.model'
+          - 'FEI_frontal+Yale-FacesB_n=20.model'
+
           
-          # Hybrid N = 30
-          - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
-          - 'mug_0.1+FACES+Yale-FacesB_n=30.model'
-          - 'mug_0.3+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
-          - 'mug_0.3+FACES+Yale-FacesB_n=30.model'
-          - 'mug_0.5+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
-          - 'mug_0.5+FACES+Yale-FacesB_n=30.model'
-          - 'mug_0.8+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
-          - 'mug_0.8+FACES+Yale-FacesB_n=30.model'
-          - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
-          - 'mug_1.0+FACES+Yale-FacesB_n=30.model'
-          
+#           # Hybrid N = 30
+#           - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+#           - 'mug_0.1+FACES+Yale-FacesB_n=30.model'
+#           - 'mug_0.3+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+#           - 'mug_0.3+FACES+Yale-FacesB_n=30.model'
+#           - 'mug_0.5+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+#           - 'mug_0.5+FACES+Yale-FacesB_n=30.model'
+#           - 'mug_0.8+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+#           - 'mug_0.8+FACES+Yale-FacesB_n=30.model'
+#           - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=30.model'
+#           - 'mug_1.0+FACES+Yale-FacesB_n=30.model'
+#           - 'FACES+FEI_frontal+JAFFE+TFEID+Yale-FacesB_n=30.model'
+#           - 'FACES+FEI_frontal+Yale-FacesB_n=30.model'
+#           - 'FACES+Yale-FacesB_n=30.model'
+#           - 'FEI_frontal+Yale-FacesB_n=30.model'
+
           # Hybrid N = 50
           - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
           - 'mug_0.1+FACES+Yale-FacesB_n=50.model'
@@ -103,17 +112,21 @@ jobs:
           - 'mug_0.8+FACES+Yale-FacesB_n=50.model'
           - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
           - 'mug_1.0+FACES+Yale-FacesB_n=50.model'
-          
-#           # N = 50
-#           - 'FACES_48x48_n=50.model'
-#           - 'FEI_48x48_n=50.model'
-#           - 'FEI_frontal_48x48_n=50.model'
-#           - 'mug_48x48_n=50.model'
-#           - 'pca_n=50_affectnet.sav'
-#           - 'pca_n=50_celebreties.sav'
-#           - 'pca_n=50_fairface.sav'
-#           - 'pca_n=50_ffhq.sav'
-#           - 'pca_n=50_yaleB.sav'
+          - 'FACES+FEI_frontal+JAFFE+TFEID+Yale-FacesB_n=50.model'
+          - 'FACES+FEI_frontal+Yale-FacesB_n=50.model'
+          - 'FACES+Yale-FacesB_n=50.model'
+          - 'FEI_frontal+Yale-FacesB_n=50.model'
+
+          # N = 50
+          - 'FACES_48x48_n=50.model'
+          - 'FEI_48x48_n=50.model'
+          - 'FEI_frontal_48x48_n=50.model'
+          - 'mug_48x48_n=50.model'
+          - 'pca_n=50_affectnet.sav'
+          - 'pca_n=50_celebreties.sav'
+          - 'pca_n=50_fairface.sav'
+          - 'pca_n=50_ffhq.sav'
+          - 'pca_n=50_yaleB.sav'
           
 #           # N = 100
 #           - 'FACES_48x48_n=100.model'
