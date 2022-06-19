@@ -13,6 +13,7 @@ try:
     sys.excepthook = ultratb.FormattedTB(mode='Verbose', color_scheme='Linux', call_pdb=False)
 except:
     pass
+
 import os
 from feature_extracton import FeatureExtraction
 import knn
@@ -32,6 +33,8 @@ test_dir = ""
 load_mode = "numpy"
 faces_db = {}
 solve_conflicts = None
+
+arr = []
 
 
 def test(number_of_faces, k):
@@ -55,7 +58,7 @@ def test(number_of_faces, k):
             files = sorted(os.listdir(os.path.join(test_dir, d)))
             all_files += [[os.path.join(d, f) for f in files]]
 
-        face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts, threshold=9999999)
+        face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts, threshold=999)
 
         for files in zip(*all_files):
 
@@ -66,13 +69,15 @@ def test(number_of_faces, k):
             if not np.all(ids == range(number_of_faces)):
                 local_count_errors += 1
                 if np.max(ids) >= number_of_faces:
-                    print(f"================================ Created New Class: {ids}")
+                    print(f"================================================================ Created New Class: {ids}")
 
         count += local_count
         count_errors += local_count_errors
 
         local_accuracy = 100 - 100 * (local_count_errors / local_count)
         min_accuracy = min(min_accuracy, local_accuracy)
+
+        arr.append((local_accuracy, " vs ".join([*dirs])))
 
         print(f": {local_accuracy}%", end='') if __VERBOSE__ else None
         print(" [MIN]") if __VERBOSE__ and local_accuracy == min_accuracy else print("")
@@ -150,3 +155,9 @@ if __name__ == '__main__':
     if args.save_numpy:
         print(f"Saving Numpy Dataset to {args.save_numpy}")
         save_faces_db_numpy(args.save_numpy)
+
+    arr = sorted(arr)
+    print("==========================================================")
+    for accuracy, name in arr:
+        print(f"{'%.5f'.format(accuracy)} : {name}")
+    
