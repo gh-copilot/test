@@ -65,6 +65,8 @@ def test(number_of_faces, k):
             local_count += 1
             if not np.all(ids == range(number_of_faces)):
                 local_count_errors += 1
+                if np.max(ids) >= number_of_faces:
+                    print(f"================================ Created New Class: {ids}")
 
         count += local_count
         count_errors += local_count_errors
