@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ test ]
+    branches: [ test_debug ]
 
 #   schedule:
 #     - cron: '0 12 * * *'
