@@ -35,7 +35,7 @@ faces_db = {}
 solve_conflicts = None
 
 arr = []
-
+people = {}
 
 def test(number_of_faces, k):
     count = 0
@@ -51,12 +51,14 @@ def test(number_of_faces, k):
         local_count = 0
         local_count_errors = 0
 
-        print(*dirs, sep=" vs ", end='') if __VERBOSE__ else None
-
         all_files = []
         for d in dirs:
             files = sorted(os.listdir(os.path.join(test_dir, d)))
             all_files += [[os.path.join(d, f) for f in files]]
+        
+        dirs = [ d.rstrip("_numpy") for d in dirs]
+        
+        print(*dirs, sep=" vs ", end='') if __VERBOSE__ else None
 
         face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts, threshold=99999999)
 
@@ -77,7 +79,10 @@ def test(number_of_faces, k):
         local_accuracy = 100 - 100 * (local_count_errors / local_count)
         min_accuracy = min(min_accuracy, local_accuracy)
 
-        arr.append((local_accuracy, " vs ".join([*dirs])))
+        [ people[d] = 0.0 for d in dirs if d not in people]
+        [ people[d] += local_accuracy for d in dirs]
+        
+        arr.append((local_accuracy, [*dirs]))
 
         print(f": {local_accuracy}%", end='') if __VERBOSE__ else None
         print(" [MIN]") if __VERBOSE__ and local_accuracy == min_accuracy else print("")
@@ -160,4 +165,11 @@ if __name__ == '__main__':
     print("==========================================================")
     for accuracy, name in arr:
         print(f"{'%.5f'%accuracy} : {name}")
+    
+    print("==========================================================")
+    people = sorted(people.items(), key=lambda item: item[1])
+    for accuracy, name in people:
+        print(f"{'%.5f'%accuracy} : {name}")
+    
+    
     
