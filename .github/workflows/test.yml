@@ -19,7 +19,7 @@ env:
   CI: 'true'
   TERM: 'xterm-256color'
   TESTSET: 'arab' # 'arab' or 'ytfaces'
-  TESTSET_TYPE: '_double' # or '_single' or '_double' or '' (single or double used for arab only)
+  TESTSET_TYPE: '_single' # or '_single' or '_double' or '' (single or double used for arab only)
 
 jobs:
   prepare_arab_dataset:
@@ -71,21 +71,21 @@ jobs:
       fail-fast: false
       matrix:
         model: 
-          # Hybrid N = 20
-          - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
-          - 'mug_0.1+FACES+Yale-FacesB_n=20.model'
-          - 'mug_0.3+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
-          - 'mug_0.3+FACES+Yale-FacesB_n=20.model'
-          - 'mug_0.5+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
-          - 'mug_0.5+FACES+Yale-FacesB_n=20.model'
-          - 'mug_0.8+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
-          - 'mug_0.8+FACES+Yale-FacesB_n=20.model'
-          - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
-          - 'mug_1.0+FACES+Yale-FacesB_n=20.model'
-          - 'FACES+FEI_frontal+JAFFE+TFEID+Yale-FacesB_n=20.model'
-          - 'FACES+FEI_frontal+Yale-FacesB_n=20.model'
-          - 'FACES+Yale-FacesB_n=20.model'
-          - 'FEI_frontal+Yale-FacesB_n=20.model'
+#           # Hybrid N = 20
+#           - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+#           - 'mug_0.1+FACES+Yale-FacesB_n=20.model'
+#           - 'mug_0.3+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+#           - 'mug_0.3+FACES+Yale-FacesB_n=20.model'
+#           - 'mug_0.5+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+#           - 'mug_0.5+FACES+Yale-FacesB_n=20.model'
+#           - 'mug_0.8+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+#           - 'mug_0.8+FACES+Yale-FacesB_n=20.model'
+#           - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
+#           - 'mug_1.0+FACES+Yale-FacesB_n=20.model'
+#           - 'FACES+FEI_frontal+JAFFE+TFEID+Yale-FacesB_n=20.model'
+#           - 'FACES+FEI_frontal+Yale-FacesB_n=20.model'
+#           - 'FACES+Yale-FacesB_n=20.model'
+#           - 'FEI_frontal+Yale-FacesB_n=20.model'
 
           
 #           # Hybrid N = 30
@@ -104,32 +104,32 @@ jobs:
 #           - 'FACES+Yale-FacesB_n=30.model'
 #           - 'FEI_frontal+Yale-FacesB_n=30.model'
 
-          # Hybrid N = 50
-          - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
-          - 'mug_0.1+FACES+Yale-FacesB_n=50.model'
-          - 'mug_0.3+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
-          - 'mug_0.3+FACES+Yale-FacesB_n=50.model'
-          - 'mug_0.5+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
-          - 'mug_0.5+FACES+Yale-FacesB_n=50.model'
-          - 'mug_0.8+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
-          - 'mug_0.8+FACES+Yale-FacesB_n=50.model'
+#           # Hybrid N = 50
+#           - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
+#           - 'mug_0.1+FACES+Yale-FacesB_n=50.model'
+#           - 'mug_0.3+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
+#           - 'mug_0.3+FACES+Yale-FacesB_n=50.model'
+#           - 'mug_0.5+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
+#           - 'mug_0.5+FACES+Yale-FacesB_n=50.model'
+#           - 'mug_0.8+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
+#           - 'mug_0.8+FACES+Yale-FacesB_n=50.model'
           - 'mug_1.0+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=50.model'
-          - 'mug_1.0+FACES+Yale-FacesB_n=50.model'
-          - 'FACES+FEI_frontal+JAFFE+TFEID+Yale-FacesB_n=50.model'
-          - 'FACES+FEI_frontal+Yale-FacesB_n=50.model'
-          - 'FACES+Yale-FacesB_n=50.model'
-          - 'FEI_frontal+Yale-FacesB_n=50.model'
+#           - 'mug_1.0+FACES+Yale-FacesB_n=50.model'
+#           - 'FACES+FEI_frontal+JAFFE+TFEID+Yale-FacesB_n=50.model'
+#           - 'FACES+FEI_frontal+Yale-FacesB_n=50.model'
+#           - 'FACES+Yale-FacesB_n=50.model'
+#           - 'FEI_frontal+Yale-FacesB_n=50.model'
 
-          # N = 50
-          - 'FACES_48x48_n=50.model'
-          - 'FEI_48x48_n=50.model'
-          - 'FEI_frontal_48x48_n=50.model'
-          - 'mug_48x48_n=50.model'
-          - 'pca_n=50_affectnet.sav'
-          - 'pca_n=50_celebreties.sav'
-          - 'pca_n=50_fairface.sav'
-          - 'pca_n=50_ffhq.sav'
-          - 'pca_n=50_yaleB.sav'
+#           # N = 50
+#           - 'FACES_48x48_n=50.model'
+#           - 'FEI_48x48_n=50.model'
+#           - 'FEI_frontal_48x48_n=50.model'
+#           - 'mug_48x48_n=50.model'
+#           - 'pca_n=50_affectnet.sav'
+#           - 'pca_n=50_celebreties.sav'
+#           - 'pca_n=50_fairface.sav'
+#           - 'pca_n=50_ffhq.sav'
+#           - 'pca_n=50_yaleB.sav'
           
 #           # N = 100
 #           - 'FACES_48x48_n=100.model'
@@ -146,7 +146,11 @@ jobs:
 #           - 'pca_n=400_yaleB.sav'
         
         faces:
-          - "2 3 4 5"
+#           - "2 3 4 5"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
           
         conflict_solver:
           - "true"
@@ -194,7 +198,7 @@ jobs:
         continue-on-error: true
         if: always()
 
-      - name: "Run With Conflict Solver"
+      - name: "Run With Conflict Solver, N=${{ matrix.faces }}"
         if: ${{ matrix.conflict_solver == 'true' }}
         continue-on-error: true
         run: |
@@ -206,13 +210,14 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 13 | tee -a "${model_name}_result_with_conflict_solver.txt"
+            # python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 13 | tee -a "${model_name}_result_with_conflict_solver.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 -v | tee -a "${model_name}_result_with_conflict_solver.txt"
             
             echo ""
             echo ""
           done
       
-      - name: "Run Without Conflict Solver"
+      - name: "Run Without Conflict Solver, N=${{ matrix.faces }}"
         if: ${{ matrix.conflict_solver == 'false' }}
         continue-on-error: true
         run: |
@@ -223,7 +228,8 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 13| tee -a "${model_name}_result.txt"
+            # python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 13| tee -a "${model_name}_result.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 -v | tee -a "${model_name}_result.txt"
             
             echo ""
             echo ""
@@ -233,12 +239,12 @@ jobs:
         continue-on-error: true
         if: always()
       
-      - name: Release Files
-        if: always()
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: "models_${{ env.TESTSET }}${{ env.TESTSET_TYPE }}_v1.1"
-          name: "Models Test on ${{ env.TESTSET }}${{ env.TESTSET_TYPE }} data"
-          files: ./*.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Release Files
+#         if: always()
+#         uses: softprops/action-gh-release@v1
+#         with:
+#           tag_name: "models_${{ env.TESTSET }}${{ env.TESTSET_TYPE }}_v1.1"
+#           name: "Models Test on ${{ env.TESTSET }}${{ env.TESTSET_TYPE }} data"
+#           files: ./*.txt
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
