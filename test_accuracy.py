@@ -78,9 +78,11 @@ def test(number_of_faces, k):
 
         local_accuracy = 100 - 100 * (local_count_errors / local_count)
         min_accuracy = min(min_accuracy, local_accuracy)
-
-        [ people[d] = 0.0 for d in dirs if d not in people]
-        [ people[d] += local_accuracy for d in dirs]
+        
+        for d in dirs:
+            if d not in people:
+                people[d] = 0.0
+            people[d] += local_accuracy
         
         arr.append((local_accuracy, [*dirs]))
 
