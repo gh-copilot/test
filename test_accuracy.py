@@ -58,7 +58,7 @@ def test(number_of_faces, k):
             files = sorted(os.listdir(os.path.join(test_dir, d)))
             all_files += [[os.path.join(d, f) for f in files]]
 
-        face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts, threshold=999)
+        face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts, threshold=99999999)
 
         for files in zip(*all_files):
 
@@ -159,5 +159,5 @@ if __name__ == '__main__':
     arr = sorted(arr)
     print("==========================================================")
     for accuracy, name in arr:
-        print(f"{'%.5f'.format(accuracy)} : {name}")
+        print(f"{'%.5f'%accuracy} : {name}")
     
