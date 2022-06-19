@@ -48,7 +48,7 @@ def test(number_of_faces, k):
         local_count = 0
         local_count_errors = 0
 
-        print(*dirs, sep=" vs ") if __VERBOSE__ else None
+        print(*dirs, sep=" vs ", end='') if __VERBOSE__ else None
 
         all_files = []
         for d in dirs:
@@ -72,7 +72,8 @@ def test(number_of_faces, k):
         local_accuracy = 100 - 100 * (local_count_errors / local_count)
         min_accuracy = min(min_accuracy, local_accuracy)
 
-        print(f"    Local Accuracy: {local_accuracy}%") if __VERBOSE__ else None
+        print(f": {local_accuracy}%", end='') if __VERBOSE__ else None
+        print(" [MIN]") if __VERBOSE__ and local_accuracy == min_accuracy else print("")
 
     print(f"    Accuracy: {100 - 100 * (count_errors / count)}%")
     print(f"    Min Accuracy: {min_accuracy}%")
