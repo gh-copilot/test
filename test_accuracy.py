@@ -55,7 +55,7 @@ def test(number_of_faces, k):
             files = sorted(os.listdir(os.path.join(test_dir, d)))
             all_files += [[os.path.join(d, f) for f in files]]
 
-        face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts)
+        face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts, threshold=9999999)
 
         for files in zip(*all_files):
 
