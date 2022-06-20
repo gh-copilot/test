@@ -56,7 +56,7 @@ def test(number_of_faces, k):
             files = sorted(os.listdir(os.path.join(test_dir, d)))
             all_files += [[os.path.join(d, f) for f in files]]
         
-        dirs = [ d.rstrip("_numpy") for d in dirs]
+        dirs = [ d.replace("_numpy", "") for d in dirs]
         
         print(*dirs, sep=" vs ", end='') if __VERBOSE__ else None
 
@@ -171,7 +171,7 @@ if __name__ == '__main__':
     print("==========================================================")
     people = sorted(people.items(), key=lambda item: item[1])
     for name, accuracy in people:
-        print(f"{'%.5f'%accuracy} : {name}")
+        print(f"{'%.5f'%(accuracy/(args.number_of_faces-1))}% : {name}")
     
     
     
