@@ -170,7 +170,7 @@ if __name__ == '__main__':
     
     print("==========================================================")
     people = sorted(people.items(), key=lambda item: item[1])
-    for accuracy, name in people:
+    for name, accuracy in people:
         print(f"{'%.5f'%accuracy} : {name}")
     
     
