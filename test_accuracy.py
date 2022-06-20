@@ -36,13 +36,16 @@ solve_conflicts = None
 
 arr = []
 people = {}
-count = 0
-count_person = None
+one_perseon_count = 0
+
 
 def test(number_of_faces, k):
+    global one_perseon_count
+    
     count = 0
     count_errors = 0
-
+    count_person = None
+    
     min_accuracy = 100
 
     test_dir_contents = sorted(os.listdir(test_dir))
@@ -85,7 +88,7 @@ def test(number_of_faces, k):
             if count_person is None:
                 count_person = d
             
-            count += 1 if count_person == d else 0
+            one_perseon_count += 1 if count_person == d else 0
             
             if d not in people:
                 people[d] = 0.0
@@ -175,10 +178,10 @@ if __name__ == '__main__':
     for accuracy, name in arr:
         print(f"{'%.5f'%accuracy} : {name}")
     
-    print(f"======================= count = {count} ===================================")
+    print(f"======================= count = {one_perseon_count} ===================================")
     people = sorted(people.items(), key=lambda item: item[1])
     for name, accuracy in people:
-        print(f"{'%.5f'%(accuracy/count)}% : {name}")
+        print(f"{'%.5f'%(accuracy/one_perseon_count)}% : {name}")
     
     
     
