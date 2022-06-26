@@ -63,7 +63,7 @@ def get_area_ratio(face1, face2):
 
 def reload_face(face):
     frame_grey = np.copy(face)
-    face = get_max_face(face_detector(frame_grey, 3))
+    face = get_max_face(face_detector(frame_grey, 1))
     if face is None:
         return frame_grey
     face = face.rect if hasattr(face, 'rect') else face
@@ -73,7 +73,7 @@ def reload_face(face):
 
 def load_face(file):
     frame_grey = cv2.imread(file)
-    face = get_max_face(face_detector(frame_grey, 3))
+    face = get_max_face(face_detector(frame_grey, 1))
     face = face.rect if hasattr(face, 'rect') else face
     face = frame_grey[face.top():face.bottom(), face.left():face.right()]
 
