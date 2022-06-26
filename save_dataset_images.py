@@ -17,18 +17,22 @@ def get_args():
     parser.add_argument('--output', type=str, required=True)
     parser.add_argument('--numpy_output', type=str, required=True)
     parser.add_argument('--double', default=False, action="store_true")
+    parser.add_argument('--cnn', default=False, action="store_true")
     parser.add_argument('--size', type=int, default=45)
     return parser.parse_args()
 
 
 args = get_args()
-face_detector = dlib.get_frontal_face_detector()
+CNN_MODEL = 'mmod_human_face_detector.dat'
+face_detector = dlib.cnn_face_detection_model_v1(CNN_MODEL) if args.cnn else dlib.get_frontal_face_detector()
 np.random.seed(42)
 
 
 def get_area(rectangle):
     if rectangle is None:
         return 0
+    if type(rectangle) is dlib.mmod_rectangle:
+        return (rectangle.rect.right() - rectangle.rect.left()) * (rectangle.rect.bottom() - rectangle.rect.top())
     if type(rectangle) is dlib.rectangle:
         return (rectangle.right() - rectangle.left()) * (rectangle.bottom() - rectangle.top())
     if type(rectangle) is np.ndarray:
@@ -43,6 +47,7 @@ def get_max_face(faces):
         if area > max_area:
             max_area = area
             max_face = face
+    print(f"confidence: {max_face.confidence}") if hasattr(max_face, 'confidence') else None
     return max_face
 
 
@@ -61,6 +66,7 @@ def reload_face(face):
     face = get_max_face(face_detector(frame_grey, 3))
     if face is None:
         return frame_grey
+    face = face.rect if hasattr(face, 'rect') else face
     face = frame_grey[face.top():face.bottom(), face.left():face.right()]
     return face
 
@@ -68,6 +74,7 @@ def reload_face(face):
 def load_face(file):
     frame_grey = cv2.imread(file)
     face = get_max_face(face_detector(frame_grey, 3))
+    face = face.rect if hasattr(face, 'rect') else face
     face = frame_grey[face.top():face.bottom(), face.left():face.right()]
 
     new_face = reload_face(face) if args.double else None
