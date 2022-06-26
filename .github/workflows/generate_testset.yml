@@ -153,7 +153,7 @@ jobs:
           mkdir "${{ matrix.name }}_faces"
           mkdir "${{ matrix.name }}_numpy"
           
-          python3 -u save_dataset_images.py --cnn \
+          python3 -u save_dataset_images.py --cnn --double \
               --dataset "${{ matrix.name }}_frames" \
               --output "${{ matrix.name }}_faces" \
               --numpy_output "${{ matrix.name }}_numpy"
@@ -171,8 +171,8 @@ jobs:
       - name: Release Files
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "testset_dlib_cnn_single_v1.0"
-          name: "Testset Dlib CNN Single"
+          tag_name: "testset_dlib_cnn_double_v1.0"
+          name: "Testset Dlib CNN Dowble"
           files: |
             *.mp4
             *.7z
@@ -182,8 +182,8 @@ jobs:
       - name: Release Files
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "testset_dlib_cnn_single_numpy_v1.0"
-          name: "Testset Dlib CNN Single Numpy"
+          tag_name: "testset_dlib_cnn_double_numpy_v1.0"
+          name: "Testset Dlib CNN Double Numpy"
           files: "*_numpy.7z"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
