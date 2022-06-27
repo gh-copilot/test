@@ -19,7 +19,7 @@ env:
   CI: 'true'
   TERM: 'xterm-256color'
   TESTSET: 'arab' # 'arab' or 'ytfaces'
-  TESTSET_TYPE: '_dlib_cnn_single' # or '_single' or '_double' or or '_dlib_cnn_single' or '_dlib_cnn_double' or ''
+  TESTSET_TYPE: '_dlib_cnn_double' # or '_single' or '_double' or or '_dlib_cnn_single' or '_dlib_cnn_double' or ''
 
 jobs:
   prepare_arab_dataset:
