@@ -19,7 +19,7 @@ env:
   CI: 'true'
   TERM: 'xterm-256color'
   TESTSET: 'arab' # 'arab' or 'ytfaces'
-  TESTSET_TYPE: '_single' # or '_single' or '_double' or '' (single or double used for arab only)
+  TESTSET_TYPE: '_dlib_cnn_single' # or '_single' or '_double' or or '_dlib_cnn_single' or '_dlib_cnn_double' or ''
 
 jobs:
   prepare_arab_dataset:
@@ -194,10 +194,10 @@ jobs:
         run: 7z x testset_complete.7z
 
 
-      - name: Delete some testset files
-        run: rm -r ./testset/Ali* ./testset/Egychology* ./testset/MahmoudIsmailTV* ./testset/Droos_Online* ./testset/Aya_Shoaib* ./testset/Radwa* ./testset/Lobna* ./testset/Eman* 
-        continue-on-error: true
-        if: always()
+#       - name: Delete some testset files
+#         run: rm -r ./testset/Ali* ./testset/Egychology* ./testset/MahmoudIsmailTV* ./testset/Droos_Online* ./testset/Aya_Shoaib* ./testset/Radwa* ./testset/Lobna* ./testset/Eman* 
+#         continue-on-error: true
+#         if: always()
 
       - name: List testset files
         run: ls -lRh testset
