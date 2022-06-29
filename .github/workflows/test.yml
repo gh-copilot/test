@@ -19,7 +19,7 @@ env:
   CI: 'true'
   TERM: 'xterm-256color'
   TESTSET: 'arab' # 'arab' or 'ytfaces'
-  TESTSET_TYPE: '_double' # or '_single' or '_double' or '' (single or double used for arab only)
+  TESTSET_TYPE: '_single' # or '_single' or '_double' or '' (single or double used for arab only)
 
 jobs:
   prepare_arab_dataset:
@@ -71,29 +71,45 @@ jobs:
       fail-fast: false
       matrix:
         model: 
-#           # Normalization N = 50
-#           - 'FACES_n=50_minmax.model'
+          # Normalization N = 50
+          - 'affectnet_n=50_minmax.model'
+          - 'celebreties_n=50_minmax.model'
+          - 'fairface_n=50_minmax.model'
+          - 'FEI_frontal_n=50_minmax.model'
+          - 'FEI_n=50_minmax.model'
+          - 'ffhq_n=50_minmax.model'
+          - 'icml_face_data_n=50_minmax.model'
+          - 'mug_0.1+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
+          - 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
+          - 'mug_0.3+FACES+Yale-FacesB_n=50_minmax.model'
+          - 'mug_0.5+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
+          - 'mug_0.5+FACES+Yale-FacesB_n=50_minmax.model'
+          - 'mug_0.8+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
+          - 'mug_0.8+FACES+Yale-FacesB_n=50_minmax.model'
+          - 'mug_1.0+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
+          - 'mug_1.0+FACES+Yale-FacesB_n=50_minmax.model'
+          - 'FACES_n=50_minmax.model'
 #           - 'FACES_n=50_std.model'
-#           - 'mug_0.1+FACES+Yale-FacesB_n=50_minmax.model'
+          - 'mug_0.1+FACES+Yale-FacesB_n=50_minmax.model'
 #           - 'mug_0.1+FACES+Yale-FacesB_n=50_std.model'
-#           - 'mug_1.0_n=50_minmax.model'
+          - 'mug_1.0_n=50_minmax.model'
 #           - 'mug_1.0_n=50_std.model'
-#           - 'Yale-FacesB_n=50_minmax.model'
+          - 'Yale-FacesB_n=50_minmax.model'
 #           - 'Yale-FacesB_n=50_std.model'
           
-          # PCA(whiten=True) N = 50
-          - 'FACES_n=50_minmax_whiten.model'
-          - 'FACES_n=50_std_whiten.model'
-          - 'FACES_n=50_whiten.model'
-          - 'mug_0.1+FACES+Yale-FacesB_n=50_minmax_whiten.model'
-          - 'mug_0.1+FACES+Yale-FacesB_n=50_std_whiten.model'
-          - 'mug_0.1+FACES+Yale-FacesB_n=50_whiten.model'
-          - 'mug_1.0_n=50_minmax_whiten.model'
-          - 'mug_1.0_n=50_std_whiten.model'
-          - 'mug_1.0_n=50_whiten.model'
-          - 'Yale-FacesB_n=50_minmax_whiten.model'
-          - 'Yale-FacesB_n=50_std_whiten.model'
-          - 'Yale-FacesB_n=50_whiten.model'
+#           # PCA(whiten=True) N = 50
+#           - 'FACES_n=50_minmax_whiten.model'
+#           - 'FACES_n=50_std_whiten.model'
+#           - 'FACES_n=50_whiten.model'
+#           - 'mug_0.1+FACES+Yale-FacesB_n=50_minmax_whiten.model'
+#           - 'mug_0.1+FACES+Yale-FacesB_n=50_std_whiten.model'
+#           - 'mug_0.1+FACES+Yale-FacesB_n=50_whiten.model'
+#           - 'mug_1.0_n=50_minmax_whiten.model'
+#           - 'mug_1.0_n=50_std_whiten.model'
+#           - 'mug_1.0_n=50_whiten.model'
+#           - 'Yale-FacesB_n=50_minmax_whiten.model'
+#           - 'Yale-FacesB_n=50_std_whiten.model'
+#           - 'Yale-FacesB_n=50_whiten.model'
 
 
 #           # Hybrid N = 20
