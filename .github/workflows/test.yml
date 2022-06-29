@@ -71,15 +71,30 @@ jobs:
       fail-fast: false
       matrix:
         model: 
-          # Normalization N = 50
-          - 'FACES_n=50_minmax.model'
-          - 'FACES_n=50_std.model'
-          - 'mug_0.1+FACES+Yale-FacesB_n=50_minmax.model'
-          - 'mug_0.1+FACES+Yale-FacesB_n=50_std.model'
-          - 'mug_1.0_n=50_minmax.model'
-          - 'mug_1.0_n=50_std.model'
-          - 'Yale-FacesB_n=50_minmax.model'
-          - 'Yale-FacesB_n=50_std.model'
+#           # Normalization N = 50
+#           - 'FACES_n=50_minmax.model'
+#           - 'FACES_n=50_std.model'
+#           - 'mug_0.1+FACES+Yale-FacesB_n=50_minmax.model'
+#           - 'mug_0.1+FACES+Yale-FacesB_n=50_std.model'
+#           - 'mug_1.0_n=50_minmax.model'
+#           - 'mug_1.0_n=50_std.model'
+#           - 'Yale-FacesB_n=50_minmax.model'
+#           - 'Yale-FacesB_n=50_std.model'
+          
+          # PCA(whiten=True) N = 50
+          - 'FACES_n=50_minmax_whiten.model'
+          - 'FACES_n=50_std_whiten.model'
+          - 'FACES_n=50_whiten.model'
+          - 'mug_0.1+FACES+Yale-FacesB_n=50_minmax_whiten.model'
+          - 'mug_0.1+FACES+Yale-FacesB_n=50_std_whiten.model'
+          - 'mug_0.1+FACES+Yale-FacesB_n=50_whiten.model'
+          - 'mug_1.0_n=50_minmax_whiten.model'
+          - 'mug_1.0_n=50_std_whiten.model'
+          - 'mug_1.0_n=50_whiten.model'
+          - 'Yale-FacesB_n=50_minmax_whiten.model'
+          - 'Yale-FacesB_n=50_std_whiten.model'
+          - 'Yale-FacesB_n=50_whiten.model'
+
 
 #           # Hybrid N = 20
 #           - 'mug_0.1+FACES+FEI_frontal+JAFFE+Yale-FacesB_n=20.model'
