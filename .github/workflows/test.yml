@@ -18,8 +18,8 @@ env:
   FORCE_COLOR : 'true' # Force colors in console output
   CI: 'true'
   TERM: 'xterm-256color'
-  TESTSET: 'ytfaces' # 'arab' or 'ytfaces'
-  TESTSET_TYPE: '' # or '_single' or '_double' or '' (single or double used for arab only)
+  TESTSET: 'arab' # 'arab' or 'ytfaces'
+  TESTSET_TYPE: '_single' # or '_single' or '_double' or '' (single or double used for arab only)
 
 jobs:
   prepare_arab_dataset:
