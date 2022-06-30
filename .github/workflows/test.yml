@@ -247,7 +247,7 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 -t 14.5 15 15.3 15.5 15.7 15.9 16.1 16.3 16.5 16.7 16.75 17 | tee -a "${model_name}_result_with_conflict_solver.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 -t 10.5 11 11.3 11.5 11.7 11.9 12.1 12.3 12.5 12.7 12.75 13 | tee -a "${model_name}_result_with_conflict_solver.txt"
             
             echo ""
             echo ""
@@ -264,7 +264,7 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 -t 14.5 15 15.3 15.5 15.7 15.9 16.1 16.3 16.5 16.7 16.75 17 | tee -a "${model_name}_result.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 -t 10.5 11 11.3 11.5 11.7 11.9 12.1 12.3 12.5 12.7 12.75 13 | tee -a "${model_name}_result.txt"
             
             echo ""
             echo ""
