@@ -23,7 +23,8 @@ def get_args():
 
 args = get_args()
 face_detector = dlib.get_frontal_face_detector()
-np.random.seed(42)
+#np.random.seed(42)
+np.random.seed(123)
 
 
 def get_area(rectangle):
