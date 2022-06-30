@@ -19,7 +19,7 @@ env:
   CI: 'true'
   TERM: 'xterm-256color'
   TESTSET: 'arab' # 'arab' or 'ytfaces'
-  TESTSET_TYPE: '_single' # or '_single' or '_double' or '' (single or double used for arab only)
+  TESTSET_TYPE: '_double' # or '_single' or '_double' or '' (single or double used for arab only)
 
 jobs:
   prepare_arab_dataset:
@@ -274,12 +274,12 @@ jobs:
         continue-on-error: true
         if: always()
       
-      - name: Release Files
-        if: always()
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: "models_${{ env.TESTSET }}${{ env.TESTSET_TYPE }}_v1.1"
-          name: "Models Test on ${{ env.TESTSET }}${{ env.TESTSET_TYPE }} data"
-          files: ./*.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Release Files
+#         if: always()
+#         uses: softprops/action-gh-release@v1
+#         with:
+#           tag_name: "models_${{ env.TESTSET }}${{ env.TESTSET_TYPE }}_v1.1"
+#           name: "Models Test on ${{ env.TESTSET }}${{ env.TESTSET_TYPE }} data"
+#           files: ./*.txt
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
