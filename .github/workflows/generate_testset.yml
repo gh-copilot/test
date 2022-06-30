@@ -125,8 +125,11 @@ jobs:
             sudo wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/bin/yt-dlp
             sudo chmod a+rx /usr/bin/yt-dlp
 
-      - name: Download Video
-        run: yt-dlp -f 137 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}" || yt-dlp -f 399 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}"
+#      - name: Download Video
+#        run: yt-dlp -f 137 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}" || yt-dlp -f 399 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}"
+
+      - name: Download 720p Video
+        run: yt-dlp -f 136 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}" || yt-dlp -f 399 -o "${{ matrix.name }}.mp4" "${{ matrix.url }}"
 
       - name: Trim Video
         run: |
@@ -171,8 +174,8 @@ jobs:
       - name: Release Files
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "testset_doublev2_v1.0"
-          name: "Testset"
+          tag_name: "testset_doublev2_720p_v1.0"
+          name: "Arab Doublev2 720p Testset"
           files: |
             *.mp4
             *.7z
@@ -182,8 +185,8 @@ jobs:
       - name: Release Files
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "testset_doublev2_numpy_v1.0"
-          name: "Testset Numpy"
+          tag_name: "testset_doublev2_720p_numpy_v1.0"
+          name: "Arab Doublev2 720p Testset Numpy"
           files: "*_numpy.7z"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
