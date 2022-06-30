@@ -34,7 +34,7 @@ faces_db = {}
 solve_conflicts = None
 
 
-def test(number_of_faces, k):
+def test(number_of_faces, k, threshold):
     count = 0
     count_errors = 0
 
@@ -42,7 +42,7 @@ def test(number_of_faces, k):
 
     test_dir_contents = sorted(os.listdir(test_dir))
     dir_combinations = itertools.combinations(test_dir_contents, r=number_of_faces)
-    print(f"    TestSet Size: {math.comb(len(test_dir_contents), number_of_faces)} - Number of Faces: {number_of_faces} - K: {k}")
+    print(f"    TestSet Size: {math.comb(len(test_dir_contents), number_of_faces)} - Number of Faces: {number_of_faces} - K: {k} - Threshold: {threshold}")
 
     for dirs in dir_combinations:
         local_count = 0
@@ -55,7 +55,7 @@ def test(number_of_faces, k):
             files = sorted(os.listdir(os.path.join(test_dir, d)))
             all_files += [[os.path.join(d, f) for f in files]]
 
-        face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts)
+        face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts, threshold=threshold)
 
         for files in zip(*all_files):
 
@@ -74,8 +74,10 @@ def test(number_of_faces, k):
 
         print(f"    Local Accuracy: {local_accuracy}%") if __VERBOSE__ else None
 
-    print(f"    Accuracy: {100 - 100 * (count_errors / count)}%")
+    accuracy = 100 - 100 * (count_errors / count)
+    print(f"    Accuracy: {accuracy}%")
     print(f"    Min Accuracy: {min_accuracy}%")
+    return accuracy
 
 
 def get_face(file):
@@ -113,6 +115,7 @@ def get_command_line_args():
     args_parser.add_argument("-n", "--number-of-faces", help="Number of faces", default=2, type=int, metavar='N')
     args_parser.add_argument("-v", "--verbose", help="Show more verbose output", action="store_true")
     args_parser.add_argument("-k", help="Space-separated K values to pass to KNN", nargs="+", default=[5], type=int)
+    args_parser.add_argument("-t", "--threshold", help="Threshold", nargs="+", default=[10], type=float)
     args_parser.add_argument("-m", "--model", help="Path to the model to use", default="pca_n=50_affectnet.sav")
     args_parser.add_argument("-c", "--conflict-resolution", help="Resolve conflicts", action="store_const", const="min_distance", default=None)
 
@@ -122,12 +125,20 @@ def get_command_line_args():
     return args_parser.parse_args()
 
 
-def main(k):
+def main(k, threshold):
     start = datetime.now()
-    test(args.number_of_faces, k)
+    accuracy_infinite = test(args.number_of_faces, k, 9999999999)
     end = datetime.now()
     print(f"    Total Time: {end - start}")
     print("   ", "=" * 50)
+
+    for t in threshold:
+        start = datetime.now()
+        accuracy_threshold = test(args.number_of_faces, k, t)
+        end = datetime.now()
+        print(f"    Threshold Difference: {accuracy_infinite - accuracy_threshold}%")
+        print(f"    Total Time: {end - start}")
+        print("   ", "=" * 50)
 
 
 if __name__ == '__main__':
@@ -140,7 +151,7 @@ if __name__ == '__main__':
     FeatureExtraction.set_model_path(args.model)
     for k in args.k:
         try:
-            main(k)
+            main(k, args.threshold)
         except:
             traceback.print_exc()
 
