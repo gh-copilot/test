@@ -383,4 +383,3 @@ class KNNIdentification:
         all_ids = np.arange(self.n_classes)
         valid_ids = np.setdiff1d(all_ids, self.get_outliers_ids())
         return valid_ids.ravel()
-
