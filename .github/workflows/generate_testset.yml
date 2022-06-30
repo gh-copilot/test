@@ -153,7 +153,7 @@ jobs:
           mkdir "${{ matrix.name }}_faces"
           mkdir "${{ matrix.name }}_numpy"
           
-          python3 save_dataset_images.py \
+          python3 save_dataset_images.py --double --size 50 \
               --dataset "${{ matrix.name }}_frames" \
               --output "${{ matrix.name }}_faces" \
               --numpy_output "${{ matrix.name }}_numpy"
@@ -171,7 +171,7 @@ jobs:
       - name: Release Files
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "testset_single_v1.0"
+          tag_name: "testset_doublev2_v1.0"
           name: "Testset"
           files: |
             *.mp4
@@ -182,7 +182,7 @@ jobs:
       - name: Release Files
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "testset_single_numpy_v1.0"
+          tag_name: "testset_doublev2_numpy_v1.0"
           name: "Testset Numpy"
           files: "*_numpy.7z"
         env:
