@@ -187,7 +187,7 @@ jobs:
 #           - 'pca_n=400_yaleB.sav'
         
         faces:
-          - "2 3 4 5"
+          - "2 3 4"
           
         conflict_solver:
           - "true"
@@ -247,7 +247,7 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 11 13 17 -t 5 10 15 20 | tee -a "${model_name}_result_with_conflict_solver.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 -t 5 10 15 17 20 | tee -a "${model_name}_result_with_conflict_solver.txt"
             
             echo ""
             echo ""
@@ -264,7 +264,7 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 11 13 17 -t 5 10 15 20 | tee -a "${model_name}_result.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 -t 5 10 15 17 20 | tee -a "${model_name}_result.txt"
             
             echo ""
             echo ""
