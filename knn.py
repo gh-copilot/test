@@ -81,7 +81,7 @@ class KNNIdentification:
             self.n_classes = faces.shape[0]
 
         repeated_faces = np.tile(faces, (self.k // 2, 1))
-        repeated_faces += np.random.normal(0, 0.05, size=repeated_faces.shape)
+        repeated_faces += np.random.normal(0, 0.1, size=repeated_faces.shape)
         self.features = np.append(faces, repeated_faces, axis=0)
         self.classes = np.tile(np.arange(faces.shape[0]), 1 + self.k // 2)
         self.classes_centers = faces.copy()
@@ -277,7 +277,7 @@ class KNNIdentification:
         classes[i] = label
         classes = np.append(classes, np.repeat(label, self.k // 2), axis=0)
         repeated_faces = np.tile(row, (self.k // 2, 1))
-        repeated_faces += np.random.normal(0, 0.05, size=repeated_faces.shape)
+        repeated_faces += np.random.normal(0, 0.1, size=repeated_faces.shape)
         faces = np.append(faces, repeated_faces, axis=0)
         self.classes_count = np.append(self.classes_count, [1], axis=0)
         self.classes_centers = np.append(self.classes_centers, [row], axis=0)
