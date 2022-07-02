@@ -73,28 +73,28 @@ jobs:
         model: 
           # Normalization N = 50
           - 'affectnet_n=50_minmax.model'
-          - 'celebreties_n=50_minmax.model'
-          - 'fairface_n=50_minmax.model'
-          - 'FEI_frontal_n=50_minmax.model'
-          - 'FEI_n=50_minmax.model'
-          - 'ffhq_n=50_minmax.model'
-          - 'icml_face_data_n=50_minmax.model'
-          - 'mug_0.1+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
+#           - 'celebreties_n=50_minmax.model'
+#           - 'fairface_n=50_minmax.model'
+#           - 'FEI_frontal_n=50_minmax.model'
+#           - 'FEI_n=50_minmax.model'
+#           - 'ffhq_n=50_minmax.model'
+#           - 'icml_face_data_n=50_minmax.model'
+#           - 'mug_0.1+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
           - 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
-          - 'mug_0.3+FACES+Yale-FacesB_n=50_minmax.model'
-          - 'mug_0.5+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
-          - 'mug_0.5+FACES+Yale-FacesB_n=50_minmax.model'
-          - 'mug_0.8+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
-          - 'mug_0.8+FACES+Yale-FacesB_n=50_minmax.model'
-          - 'mug_1.0+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
-          - 'mug_1.0+FACES+Yale-FacesB_n=50_minmax.model'
-          - 'FACES_n=50_minmax.model'
+#           - 'mug_0.3+FACES+Yale-FacesB_n=50_minmax.model'
+#           - 'mug_0.5+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
+#           - 'mug_0.5+FACES+Yale-FacesB_n=50_minmax.model'
+#           - 'mug_0.8+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
+#           - 'mug_0.8+FACES+Yale-FacesB_n=50_minmax.model'
+#           - 'mug_1.0+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model'
+#           - 'mug_1.0+FACES+Yale-FacesB_n=50_minmax.model'
+#           - 'FACES_n=50_minmax.model'
 #           - 'FACES_n=50_std.model'
-          - 'mug_0.1+FACES+Yale-FacesB_n=50_minmax.model'
+#           - 'mug_0.1+FACES+Yale-FacesB_n=50_minmax.model'
 #           - 'mug_0.1+FACES+Yale-FacesB_n=50_std.model'
-          - 'mug_1.0_n=50_minmax.model'
+#           - 'mug_1.0_n=50_minmax.model'
 #           - 'mug_1.0_n=50_std.model'
-          - 'Yale-FacesB_n=50_minmax.model'
+#           - 'Yale-FacesB_n=50_minmax.model'
 #           - 'Yale-FacesB_n=50_std.model'
           
 #           # PCA(whiten=True) N = 50
@@ -188,6 +188,16 @@ jobs:
         
         faces:
           - "2 3 4 5"
+          - "6 7"
+          - "8"
+          - "9"
+          - "10"
+          - "11"
+          - "12"
+          - "13 14"
+          - "15 16"
+          - "17 18"
+          - "19 20"
           
         conflict_solver:
           - "true"
@@ -252,7 +262,7 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 7 13 | tee -a "${model_name}_result_with_conflict_solver.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 | tee -a "${model_name}_face=${face}_result_with_conflict_solver.txt"
             
             echo ""
             echo ""
@@ -269,7 +279,7 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 7 13| tee -a "${model_name}_result.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 | tee -a "${model_name}_face=${face}_result.txt"
             
             echo ""
             echo ""
@@ -283,7 +293,7 @@ jobs:
         if: always()
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: "models_${{ env.TESTSET }}${{ env.TESTSET_TYPE }}_v1.1"
+          tag_name: "models_${{ env.TESTSET }}${{ env.TESTSET_TYPE }}_v1.2"
           name: "Models Test on ${{ env.TESTSET }}${{ env.TESTSET_TYPE }} data"
           files: ./*.txt
         env:
