@@ -18,8 +18,8 @@ env:
   FORCE_COLOR : 'true' # Force colors in console output
   CI: 'true'
   TERM: 'xterm-256color'
-  TESTSET: 'arab' # 'arab' or 'ytfaces'
-  TESTSET_TYPE: '_doublev2_720p' # or '_single' or '_double' or '' (single or double used for arab only)
+  TESTSET: 'arab' # 'arab' or 'arab_filtered' or'ytfaces'
+  TESTSET_TYPE: '' # or '_single' or '_double' or '' (single or double used for arab only)
 
 jobs:
   prepare_arab_dataset:
@@ -230,6 +230,11 @@ jobs:
         if: ${{ env.TESTSET == 'arab' }}
         run: 7z x testset_complete.7z
 
+
+      - name: Extract arab filtered dataset
+        if: ${{ env.TESTSET == 'arab_filtered' }}
+        run: tar -xf arab_double_filtered_testset.tar.xz --skip-old-files
+        
       - name: List testset files
         run: ls -lRh testset
         continue-on-error: true
