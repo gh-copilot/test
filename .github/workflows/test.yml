@@ -18,7 +18,7 @@ env:
   FORCE_COLOR : 'true' # Force colors in console output
   CI: 'true'
   TERM: 'xterm-256color'
-  TESTSET: 'arab' # 'arab' or 'arab_filtered' or'ytfaces'
+  TESTSET: 'arab_filtered' # 'arab' or 'arab_filtered' or'ytfaces'
   TESTSET_TYPE: '' # or '_single' or '_double' or '' (single or double used for arab only)
 
 jobs:
