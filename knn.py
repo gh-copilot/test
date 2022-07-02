@@ -29,7 +29,7 @@ class KNNIdentification:
         Each class will have at least these number of points: `1 + k//2`.
     """
 
-    def __init__(self, n_classes: int = -1, k=5, threshold=2000, conflict_solving_strategy=None):
+    def __init__(self, n_classes: int = -1, k=3, threshold=12.5, conflict_solving_strategy=None):
         """
 
         Args:
