@@ -66,7 +66,7 @@ jobs:
   Test:
     needs: [prepare_arab_dataset]
     runs-on: ubuntu-latest
-    name: "${{ matrix.model }}, CS=${{ matrix.conflict_solver }}"
+    name: "${{ matrix.model }}, F=${{ matrix.faces }} CS=${{ matrix.conflict_solver }}"
     strategy:
       fail-fast: false
       matrix:
@@ -188,14 +188,17 @@ jobs:
         
         faces:
           - "2 3 4 5"
-          - "6 7"
+          - "6"
+          - "7"
           - "8"
           - "9"
           - "10"
           - "11"
           - "12"
-          - "13 14"
-          - "15 16"
+          - "13"
+          - "14"
+          - "15"
+          - "16"
           - "17 18"
           - "19 20"
           
@@ -250,7 +253,7 @@ jobs:
         continue-on-error: true
         if: always()
 
-      - name: "Run With Conflict Solver"
+      - name: "Run With Conflict Solver N=${{ matrix.faces }} K=5"
         if: ${{ matrix.conflict_solver == 'true' }}
         continue-on-error: true
         run: |
@@ -262,13 +265,13 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 3 5 | tee -a "${model_name}_face=${face}_result_with_conflict_solver.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" -c --model ${{ matrix.model }} -k 5 | tee -a "${model_name}_face=${face}_result_with_conflict_solver.txt"
             
             echo ""
             echo ""
           done
       
-      - name: "Run Without Conflict Solver"
+      - name: "Run Without Conflict Solver N=${{ matrix.faces }} K=5"
         if: ${{ matrix.conflict_solver == 'false' }}
         continue-on-error: true
         run: |
@@ -279,7 +282,7 @@ jobs:
           
           for face in "${faces[@]}" ; do
 
-            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 3 5 | tee -a "${model_name}_face=${face}_result.txt"
+            python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n "$face" --model ${{ matrix.model }} -k 5 | tee -a "${model_name}_face=${face}_result.txt"
             
             echo ""
             echo ""
