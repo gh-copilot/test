@@ -44,35 +44,40 @@ def test(number_of_faces, k):
     dir_combinations = itertools.combinations(test_dir_contents, r=number_of_faces)
     print(f"    TestSet Size: {math.comb(len(test_dir_contents), number_of_faces)} - Number of Faces: {number_of_faces} - K: {k}")
 
-    for dirs in dir_combinations:
-        local_count = 0
-        local_count_errors = 0
+    try:
+        for dirs in dir_combinations:
+            local_count = 0
+            local_count_errors = 0
 
-        print(*dirs, sep=" vs ") if __VERBOSE__ else None
+            print(*dirs, sep=" vs ") if __VERBOSE__ else None
 
-        all_files = []
-        for d in dirs:
-            files = sorted(os.listdir(os.path.join(test_dir, d)))
-            all_files += [[os.path.join(d, f) for f in files]]
+            all_files = []
+            for d in dirs:
+                files = sorted(os.listdir(os.path.join(test_dir, d)))
+                all_files += [[os.path.join(d, f) for f in files]]
 
-        face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts)
+            face_track = knn.KNNIdentification(k=k, conflict_solving_strategy=solve_conflicts)
 
-        for files in zip(*all_files):
+            for files in zip(*all_files):
 
-            faces = [get_face(f) for f in files]
+                faces = [get_face(f) for f in files]
 
-            ids = face_track.get_ids(faces)
-            local_count += 1
-            if not np.all(ids == range(number_of_faces)):
-                local_count_errors += 1
+                ids = face_track.get_ids(faces)
+                local_count += 1
+                if not np.all(ids == range(number_of_faces)):
+                    local_count_errors += 1
 
-        count += local_count
-        count_errors += local_count_errors
+            count_errors += local_count_errors
+            count += local_count
 
-        local_accuracy = 100 - 100 * (local_count_errors / local_count)
-        min_accuracy = min(min_accuracy, local_accuracy)
+            local_accuracy = 100 - 100 * (local_count_errors / local_count)
+            min_accuracy = min(min_accuracy, local_accuracy)
 
-        print(f"    Local Accuracy: {local_accuracy}%") if __VERBOSE__ else None
+            print(f"    Local Accuracy: {local_accuracy}%") if __VERBOSE__ else None
+    except BaseException as e:
+        print("[ERROR]", e)
+        traceback.print_exc()
+        print(f'[DEBUG] count = {count}')
 
     print(f"    Accuracy: {100 - 100 * (count_errors / count)}%")
     print(f"    Min Accuracy: {min_accuracy}%")
