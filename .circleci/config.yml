@@ -29,6 +29,7 @@ jobs:
       - run:
           name: Run with conflict solver N=7
           command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 7 -c --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
+          no_output_timeout: 10h
 
 workflows:
   main:
