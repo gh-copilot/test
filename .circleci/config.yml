@@ -1,0 +1,33 @@
+version: 2.1
+orbs:
+  python: circleci/python@1.5.0
+jobs:
+  build:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: large
+    # executor: python/default
+    steps:
+      - checkout
+      - run: git checkout test
+      - run: pip install -y dlib opencv numpy scikit-learn ipython
+
+      - run:
+          name: Extract Models
+          command: tar -xvf models.tar.xz --skip-old-files
+      
+      - run:
+          name: Extract Arab Testset
+          command: tar -xf arab_double_filtered_testset.tar.xz --skip-old-files
+      - run:
+          name: List testset files
+          command: ls -lRh testset
+
+      - run:
+          name: Run with conflict solver
+          command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 9 -c --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
+
+workflows:
+  main:
+    jobs:
+      - build
