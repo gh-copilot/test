@@ -5,7 +5,7 @@ jobs:
   build:
     machine:
       image: ubuntu-2004:current
-    resource_class: large
+    resource_class: x-large
     # executor: python/default
     steps:
       - checkout
@@ -27,8 +27,8 @@ jobs:
           command: ls -lRh testset
 
       - run:
-          name: Run with conflict solver
-          command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 9 -c --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
+          name: Run with conflict solver N=7
+          command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 7 -c --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
 
 workflows:
   main:
