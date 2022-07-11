@@ -5,19 +5,21 @@ jobs:
   build:
     machine:
       image: ubuntu-2004:current
-    resource_class: xlarge
+    resource_class: large
     # executor: python/default
     steps:
       - checkout
       - run: git checkout test
       - run: sudo apt update && sudo apt install ffmpeg
-      - run: pip3 install --upgrade dlib opencv-python opencv-contrib-python numpy scikit-learn ipython
+      - run: |
+          pip3 install --upgrade wheel 
+          pip3 install --upgrade dlib opencv-python opencv-contrib-python numpy scikit-learn ipython
 
       - run: which conda || echo ''
       - run: python3 --version
-      - run:
-          name: Extract Models
-          command: tar -xvf models.tar.xz --skip-old-files
+      # - run:
+      #     name: Extract Models
+      #     command: tar -xvf models.tar.xz --skip-old-files
       
       - run:
           name: Extract Arab Testset
@@ -27,9 +29,9 @@ jobs:
           command: ls -lRh testset
 
       - run:
-          name: Run with conflict solver N=7
-          command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 7 -c --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
-          no_output_timeout: 10h
+          name: Run with conflict solver N=9
+          command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 9 -c --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
+          no_output_timeout: 12h
 
 workflows:
   main:
