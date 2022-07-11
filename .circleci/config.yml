@@ -10,8 +10,9 @@ jobs:
     steps:
       - checkout
       - run: git checkout test
-      - run: pip install -y dlib opencv numpy scikit-learn ipython
-
+      - run: pip install -u dlib opencv numpy scikit-learn ipython
+      - run: which conda || echo ''
+      
       - run:
           name: Extract Models
           command: tar -xvf models.tar.xz --skip-old-files
