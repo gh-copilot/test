@@ -10,7 +10,9 @@ jobs:
     steps:
       - checkout
       - run: git checkout test
-      - run: pip3 install --upgrade dlib opencv numpy scikit-learn ipython
+      - run: sudo apt update && sudo apt install ffmpeg
+      - run: pip3 install --upgrade dlib opencv-python opencv-contrib-python numpy scikit-learn ipython
+
       - run: which conda || echo ''
       - run: python3 --version
       - run:
