@@ -15,7 +15,6 @@ jobs:
           pip3 install --upgrade wheel 
           pip3 install --upgrade dlib opencv-python opencv-contrib-python numpy scikit-learn ipython
 
-      - run: which conda || echo ''
       - run: python3 --version
       # - run:
       #     name: Extract Models
@@ -24,13 +23,19 @@ jobs:
       - run:
           name: Extract Arab Testset
           command: tar -xf arab_double_filtered_testset.tar.xz --skip-old-files
+      
       - run:
           name: List testset files
           command: ls -lRh testset
 
+      # - run:
+      #     name: Run with conflict solver N=9
+      #     command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 9 -c --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
+      #     no_output_timeout: 12h
+
       - run:
-          name: Run with conflict solver N=9
-          command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 9 -c --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
+          name: Run without conflict solver N=9
+          command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 9 --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
           no_output_timeout: 12h
 
 workflows:
