@@ -13,7 +13,7 @@ index 3665236..12d32fd 100644
 +  echo progname="${pkgname}-${pkgver}.sh" - Used in "$extract" >> /tmp/out
 +  
 +  # Determine the offset of sfx_archive.tar.gz
-+  grep --text 'tail -c' "${pkgname}-${pkgver}.sh" 2>&1 >> /tmp/out
++  grep --text 'tail -c' "${pkgname}-${pkgver}.sh" >> /tmp/out 2>&1
 +  extract=$(grep --text 'tail -c' "${pkgname}-${pkgver}.sh") # --text always treats a file as text
 +  echo extract=grep --text 'tail -c' ${pkgname}-${pkgver}.sh - --text always treats a file as text >> /tmp/out
 +  
