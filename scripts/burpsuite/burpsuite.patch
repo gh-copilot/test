@@ -4,21 +4,21 @@ index 3665236..12d32fd 100644
 +++ b/PKGBUILD
 @@ -27,3 +27,29 @@
 +prepare() {
-+  # cd ${srcdir}
++  pwd /tmp/out >> # cd ${srcdir}
 +  # Extracts BurpSuite Installer
 +  prg_dir='.' # Used in "$extract"
-+  echo prg_dir='.' # Used in "$extract" >> /tmp/out
++  echo prg_dir='.' - Used in "$extract" >> /tmp/out
 +  
 +  progname="${pkgname}-${pkgver}.sh" # Used in "$extract"
-+  echo progname="${pkgname}-${pkgver}.sh" # Used in "$extract" >> /tmp/out
++  echo progname="${pkgname}-${pkgver}.sh" - Used in "$extract" >> /tmp/out
 +  
 +  # Determine the offset of sfx_archive.tar.gz
 +  # Sample Output: tail -c 91868929 "$prg_dir/${progname}" > sfx_archive.tar.gz 2> /dev/null
 +  extract=$(grep --text 'tail -c' ${pkgname}-${pkgver}.sh) # --text always treats a file as text
-+  echo extract=$(grep --text 'tail -c' ${pkgname}-${pkgver}.sh) # --text always treats a file as text >> /tmp/out
++  echo extract=$(grep --text 'tail -c' ${pkgname}-${pkgver}.sh) - --text always treats a file as text >> /tmp/out
 +  
 +  eval "$extract" # Execute $extract after replacing "$prg_dir/${progname}" with ./${pkgname}-${pkgver}.sh
-+  echo eval "$extract" # Execute $extract after replacing "$prg_dir/${progname}" with ./${pkgname}-${pkgver}.sh >> /tmp/out
++  echo eval "$extract" - Execute $extract after replacing "$prg_dir/${progname}" with ./${pkgname}-${pkgver}.sh >> /tmp/out
 +  
 +  gunzip sfx_archive.tar.gz
 +  echo gunzip sfx_archive.tar.gz >> /tmp/out
