@@ -1,42 +1,52 @@
 version: 2.1
-orbs:
-  python: circleci/python@1.5.0
 jobs:
   build:
-    machine:
-      image: ubuntu-2004:current
+    docker:
+      - image: manjarolinux/base
     resource_class: large
-    # executor: python/default
     steps:
       - checkout
-      - run: git checkout test
-      - run: sudo apt update && sudo apt install ffmpeg
+      - run: git checkout main
+      
       - run: |
-          pip3 install --upgrade wheel 
-          pip3 install --upgrade dlib opencv-python opencv-contrib-python numpy scikit-learn ipython
+          sed -i 's/#Color/Color/g' /etc/pacman.conf
+          sed -i 's/HoldPkg/#HoldPkg/g' /etc/pacman.conf
+          sed -i 's/IgnorePkg/#IgnorePkg/g' /etc/pacman.conf
+          cat /etc/pacman.conf
 
-      - run: python3 --version
-      # - run:
-      #     name: Extract Models
-      #     command: tar -xvf models.tar.xz --skip-old-files
+      - run: |
+          pacman -Syu --noconfirm --color always
+          pacman -Sy --noconfirm --color always --needed base-devel curl wget coreutils xterm git sudo yay asp bat socat colorgcc procps-ng
+
+      - run: whoami
+
+      - run: |
+            # Wheel group is the sudo group in Arch Linux
+            useradd --create-home --groups wheel  user
+            echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+            chown -R user ..
       
-      - run:
-          name: Extract Arab Testset
-          command: tar -xf arab_double_filtered_testset.tar.xz --skip-old-files
+      - run: sudo -u user yay -Sy --color always --noconfirm --builddir . --cleanafter paru-bin
       
-      - run:
-          name: List testset files
-          command: ls -lRh testset
+      
+      - run: |
+          cat \<<EOF > build.sh
+          #!/bin/bash
+          
+          rm -rf "burpsuite" || echo 
+          git clone "https://aur.archlinux.org/burpsuite.git"
+          cd "burpsuite"
+                    
+          chmod a+x "../scripts/burpsuite/burpsuite.sh"
+          "../scripts/burpsuite/burpsuite.sh"
+        
+          paru -Ui --noconfirm --color always --nocleanafter --pgpfetch --noredownload
+          
+          EOF
+          
+          chmod a+x build.sh
 
-      # - run:
-      #     name: Run with conflict solver N=9
-      #     command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 9 -c --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
-      #     no_output_timeout: 12h
-
-      - run:
-          name: Run without conflict solver N=9
-          command: python3 -u test_accuracy.py "$PWD/testset" --load-numpy -n 9 --model 'mug_0.3+FACES+Yale-FacesB+JAFFE+TFEID+FEI_frontal_n=50_minmax.model' -k 5
-          no_output_timeout: 12h
+          sudo -E -u user ./build.sh
 
 workflows:
   main:
