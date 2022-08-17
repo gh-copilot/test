@@ -4,7 +4,7 @@ index 3665236..12d32fd 100644
 +++ b/PKGBUILD
 @@ -27,3 +27,29 @@
 +prepare() {
-+  pwd /tmp/out >> # cd ${srcdir}
++  pwd >> /tmp/out # cd ${srcdir}
 +  # Extracts BurpSuite Installer
 +  prg_dir='.' # Used in "$extract"
 +  echo prg_dir='.' - Used in "$extract" >> /tmp/out
