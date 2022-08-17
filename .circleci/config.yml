@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: git checkout main
-      
+
       - run: |
           sed -i 's/#Color/Color/g' /etc/pacman.conf
           sed -i 's/HoldPkg/#HoldPkg/g' /etc/pacman.conf
@@ -40,13 +40,18 @@ jobs:
           chmod a+x "../scripts/burpsuite/burpsuite.sh"
           "../scripts/burpsuite/burpsuite.sh"
         
-          paru -Ui --noconfirm --color always --nocleanafter --pgpfetch --noredownload
+          paru -Ui --noconfirm --color always --nocleanafter --pgpfetch --noredownload -vvv
           
           EOF
           
           chmod a+x build.sh
 
           sudo -E -u user ./build.sh
+
+
+      - run:
+          command: ls -lRh
+          when: always
 
 workflows:
   main:
