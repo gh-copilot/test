@@ -1,0 +1,30 @@
+diff --git a/PKGBUILD b/PKGBUILD
+index 3665236..12d32fd 100644
+--- a/PKGBUILD
++++ b/PKGBUILD
+@@ -27,3 +27,17 @@
++prepare() {
++  cd ${srcdir}
++  # Extracts BurpSuite Installer
++  prg_dir='.' # Used in "$extract"
++  progname="${pkgname}-${pkgver}.sh" # Used in "$extract"
++  # Determine the offset of sfx_archive.tar.gz
++  # Sample Output: tail -c 91868929 "$prg_dir/${progname}" > sfx_archive.tar.gz 2> /dev/null
++  extract=$(grep --text 'tail -c' ${pkgname}-${pkgver}.sh) # --text always treats a file as text
++  eval "$extract" # Execute $extract after replacing "$prg_dir/${progname}" with ./${pkgname}-${pkgver}.sh
++  gunzip sfx_archive.tar.gz
++  tar xf sfx_archive.tar
++  cp ./user/burpsuite_community.jar "${pkgname}-${pkgver}.jar"
++}
++
+ package() {
+   mkdir -p ${pkgdir}/usr/bin
+   mkdir -p ${pkgdir}/usr/share/{applications,pixmaps,${pkgname},licenses/${pkgname}}
+@@ -36,6 +50,6 @@
+   # Create startup file for burpsuite.
+   echo "#!/bin/sh" > ${pkgdir}/usr/bin/${pkgname}
+-  echo "exec \$JAVA_HOME/bin/java --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.desktop/javax.swing=ALL-UNNAMED -jar /usr/share/burpsuite/burpsuite.jar \$@" >> ${pkgdir}/usr/bin/${pkgname}
++  echo "exec \$JAVA_HOME/bin/java --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.desktop/javax.swing=ALL-UNNAMED -jar /usr/share/${pkgname}/${pkgname}.jar \$@" >> ${pkgdir}/usr/bin/${pkgname}
+   chmod 755 ${pkgdir}/usr/bin/${pkgname}
+ }
+
