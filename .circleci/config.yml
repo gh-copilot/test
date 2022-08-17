@@ -52,7 +52,9 @@ jobs:
       - run:
           command: ls -lRh
           when: always
-
+      - run:
+          command: cat /tmp/out
+          when: always
 workflows:
   main:
     jobs:
