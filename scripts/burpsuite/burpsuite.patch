@@ -2,37 +2,24 @@ diff --git a/PKGBUILD b/PKGBUILD
 index 3665236..12d32fd 100644
 --- a/PKGBUILD
 +++ b/PKGBUILD
-@@ -27,3 +27,29 @@
+@@ -27,3 +27,16 @@
 +prepare() {
-+  pwd >> /tmp/out # cd ${srcdir}
-+  ls -lRh >> /tmp/out
++  # Extracts BurpSuite Installer
 +  prg_dir='.' # Used in "$extract"
-+  echo prg_dir='.' - Used in "$extract" >> /tmp/out
-+  
 +  progname="${pkgname}-${pkgver}.sh" # Used in "$extract"
-+  echo progname="${pkgname}-${pkgver}.sh" - Used in "$extract" >> /tmp/out
-+  
 +  # Determine the offset of sfx_archive.tar.gz
-+  grep --text 'tail -c' "${pkgname}-${pkgver}.sh" >> /tmp/out 2>&1
-+  extract=$(grep --text 'tail -c' "${pkgname}-${pkgver}.sh") # --text always treats a file as text
-+  echo extract=grep --text 'tail -c' ${pkgname}-${pkgver}.sh - --text always treats a file as text >> /tmp/out
-+  
++  # Sample Output: tail -c 91868929 "$prg_dir/${progname}" > sfx_archive.tar.gz 2> /dev/null
++  extract=$(grep --text 'tail -c' ${pkgname}-${pkgver}.sh) # --text always treats a file as text
 +  eval "$extract" # Execute $extract after replacing "$prg_dir/${progname}" with ./${pkgname}-${pkgver}.sh
-+  echo eval "$extract" - Execute $extract after replacing "$prg_dir/${progname}" with ./${pkgname}-${pkgver}.sh >> /tmp/out
-+  which gunzip >> /tmp/out
 +  gunzip sfx_archive.tar.gz
-+  echo gunzip sfx_archive.tar.gz >> /tmp/out
-+  
 +  tar xf sfx_archive.tar
-+  echo tar xf sfx_archive.tar >> /tmp/out
-+  
 +  cp ./user/burpsuite_community.jar "${pkgname}-${pkgver}.jar"
 +}
 +
  package() {
    mkdir -p ${pkgdir}/usr/bin
    mkdir -p ${pkgdir}/usr/share/{applications,pixmaps,${pkgname},licenses/${pkgname}}
-@@ -36,6 +62,6 @@
+@@ -35,6 +49,6 @@
    # Create startup file for burpsuite.
    echo "#!/bin/sh" > ${pkgdir}/usr/bin/${pkgname}
 -  echo "exec \$JAVA_HOME/bin/java --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.desktop/javax.swing=ALL-UNNAMED -jar /usr/share/burpsuite/burpsuite.jar \$@" >> ${pkgdir}/usr/bin/${pkgname}
