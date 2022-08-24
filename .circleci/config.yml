@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: manjarolinux/base
-    resource_class: large
+    resource_class: xlarge
     steps:
       - checkout
       - run: git checkout main
@@ -33,13 +33,10 @@ jobs:
           cat \<<EOF > build.sh
           #!/bin/bash
           
-          rm -rf "burpsuite" || echo 
-          git clone "https://aur.archlinux.org/burpsuite.git"
-          cd "burpsuite"
-                    
-          chmod a+x "../scripts/burpsuite/burpsuite.sh"
-          "../scripts/burpsuite/burpsuite.sh"
-        
+          rm -rf "mongodb" || echo 
+          git clone "https://aur.archlinux.org/mongodb.git"
+          cd "mongodb"
+
           paru -Ui --noconfirm --color always --nocleanafter --pgpfetch --noredownload 
           
           EOF
