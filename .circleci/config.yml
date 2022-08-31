@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: manjarolinux/base
+      - image: manjarolinux/build
     resource_class: large
     steps:
       - checkout
