@@ -19,7 +19,7 @@ jobs:
 
       - run: |
           pacman -Syu --noconfirm --color always
-          pacman -Sy --noconfirm --color always --needed base-devel curl wget coreutils xterm git sudo yay asp bat socat colorgcc procps-ng nano nano-syntax-highlighting micro tree aria2
+          pacman -Sy --noconfirm --color always --needed base-devel curl wget coreutils xterm git sudo yay asp bat socat colorgcc procps-ng nano nano-syntax-highlighting micro tree aria2 openssh
 
       - run: whoami
 
