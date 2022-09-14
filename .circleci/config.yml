@@ -32,7 +32,7 @@ jobs:
       - run: sudo -u user yay -Sy --color always --noconfirm --builddir . --cleanafter paru-bin
       
       - run: |
-          cat <<EOF > deps.sh
+          cat \<<EOF > deps.sh
             python -c 'import sys; print(sys.stdout.isatty())'
             bat --color always --paging=never /etc/makepkg.conf
           EOF
