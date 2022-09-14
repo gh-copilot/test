@@ -42,7 +42,8 @@ jobs:
           ./deps.sh
 
           echo -n "Socat Running Script: "
-          socat EXEC:'./deps.sh',pty STDIO
+          socat EXEC:'bash -l -e -o pipefail ./deps.sh',pty STDIO
+          
 
       - run: |
           cat \<<EOF > build.sh
