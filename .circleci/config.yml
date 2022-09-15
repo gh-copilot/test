@@ -46,38 +46,8 @@ jobs:
             chown -R user ..
       
       - run: sudo -u user yay -Sy --color always --noconfirm --builddir . --cleanafter paru-bin
-      
-      - run: |
-          cat \<<EOF > deps.sh
-            #!/bin/bash
-            python -c 'import sys; print(sys.stdout.isatty())'
-            bat --color always --paging=never /etc/makepkg.conf
-          EOF
-          chmod a+x deps.sh
-          bat --color always --paging=never deps.sh
-          
-          echo -n "Normal Running Script: "
-          ./deps.sh
 
-          echo -n "Socat Running Script: "
-          socat EXEC:'bash -l -e -o pipefail ./deps.sh',pty STDIO
-          
-
-      - run: |
-          cat \<<EOF > build.sh
-          #!/bin/bash
-          
-          rm -rf "mongodb" || echo 
-          git clone "https://aur.archlinux.org/mongodb.git"
-          cd "mongodb"
-
-          paru -Ui --noconfirm --color always --nocleanafter --pgpfetch --noredownload 
-          
-          EOF
-          
-          chmod a+x build.sh
-
-          sudo -E -u user ./build.sh
+      - run: sudo -u user paru -Sy --color always --noconfirm --builddir . --nocleanafter battop scotch
 
 
       - run:
