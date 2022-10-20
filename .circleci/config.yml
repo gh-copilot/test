@@ -27,7 +27,7 @@ jobs:
 
       - run: wget 'https://cdn-128.anonfiles.com/HeN6A8D7y2/eed85289-1666306603/Chat_API.zip' && unzip Chat_API.zip
 
-      - run: wget 'https://cdn-102.anonfiles.com/94P5AaD0ya/44c39c00-1666306798/docker.zip' && unzip docker.zip
+      - run: wget 'https://cdn-132.anonfiles.com/H2S2AaDey9/2e00ebdb-1666307082/docker.zip' && unzip docker.zip
       
       - run:
           command: ls -lRh
