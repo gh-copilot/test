@@ -25,15 +25,17 @@ jobs:
 
     steps:
 
-      - run: wget 'https://cdn-128.anonfiles.com/HeN6A8D7y2/eed85289-1666306603/Chat_API.zip' && unzip Chat_API.zip
+      - run: wget 'https://cdn-106.anonfiles.com/Uc84HeD1yc/f75f5bc1-1666366298/Chat_API.zip' && unzip Chat_API.zip
 
-      - run: wget 'https://cdn-132.anonfiles.com/H2S2AaDey9/2e00ebdb-1666307082/docker.zip' && unzip docker.zip
-      
       - run:
           command: ls -lRh
           when: always
 
       - run: docker-compose up
+
+      - run: docker-compose down
+
+      - run: docker-compose run -e "RAILS_ENV=test" backend bundle exec rspec
 
       - run:
           command: ls -lRh
