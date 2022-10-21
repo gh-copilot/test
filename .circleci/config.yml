@@ -25,7 +25,7 @@ jobs:
 
     steps:
 
-      - run: wget 'https://cdn-115.anonfiles.com/r8VaI3Dcya/0b5387da-1666375200/Chat_API.zip' && unzip Chat_API.zip
+      - run: wget 'https://cdn-114.anonfiles.com/ndcaJdDcy1/36ec6d2c-1666375913/Chat_API.zip' && unzip Chat_API.zip
 
       - run:
           command: ls -lRh
@@ -57,7 +57,7 @@ jobs:
           echo "**************************************************"
 
           echo "Get all Messages"
-          sleep 0.2 # data take time to be persisted
+          sleep 1 # data take time to be persisted
           curl -s "$BASE_URL/applications/$token/chats/1/messages?q=msg" | jq
           echo "**************************************************"
 
@@ -65,8 +65,7 @@ jobs:
           command: docker-compose logs
           when: always
         
-
-      # - run: docker-compose down
+      - run: docker-compose down
 
       - run: docker-compose run -e "RAILS_ENV=test" backend bundle exec rspec
 
