@@ -25,7 +25,7 @@ jobs:
 
     steps:
 
-      - run: wget 'https://cdn-130.anonfiles.com/72B3IfDfy0/601fbcc2-1666372855/Chat_API.zip' && unzip Chat_API.zip
+      - run: wget 'https://cdn-129.anonfiles.com/r0S2I6D8y1/3d603391-1666374820/Chat_API.zip' && unzip Chat_API.zip
 
       - run:
           command: ls -lRh
@@ -35,9 +35,33 @@ jobs:
 
       - run: docker-compose up -d
 
-      - run: sleep 200; docker-compose logs
+      - run: |
+          BASE_URL="http://localhost:8080/api/v1"
 
-      - run: docker-compose down
+          echo "Create a Chat Application"
+          curl -s "$BASE_URL/applications" -X POST --data name=chat_app1 | jq
+          echo "**************************************************"
+
+          token=$(curl -s $BASE_URL/applications | jq -r '.data[0].token')
+          echo "Token: $token"
+          echo "**************************************************"
+
+          echo "Create a Chat"
+          curl -s "$BASE_URL/applications/$token/chats" -X POST --data name=chat_1 | jq
+          echo "**************************************************"
+
+          echo "Create a Message"
+          curl -s "$BASE_URL/applications/$token/chats/1/messages" -X POST --data content=msg1 | jq
+          echo "**************************************************"
+
+          echo "Get all Messages"
+          sleep 0.2 # data take time to be persisted
+          curl -s "$BASE_URL/applications/$token/chats/1/messages?q=msg" | jq
+          echo "**************************************************"
+
+      - run: docker-compose logs
+
+      # - run: docker-compose down
 
       - run: docker-compose run -e "RAILS_ENV=test" backend bundle exec rspec
 
