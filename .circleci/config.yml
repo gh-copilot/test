@@ -25,13 +25,15 @@ jobs:
 
     steps:
 
-      - run: wget 'https://cdn-120.anonfiles.com/t6YcH1D8y9/87499633-1666369068/Chat_API.zip' && unzip Chat_API.zip
+      - run: wget 'https://cdn-129.anonfiles.com/N5acI6D4yf/522ac457-1666369339/Chat_API.zip' && unzip Chat_API.zip
 
       - run:
           command: ls -lRh
           when: always
 
       - run: docker-compose up
+
+      - run: docker-compose up -d
 
       - run: docker-compose down
 
