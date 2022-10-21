@@ -25,7 +25,7 @@ jobs:
 
     steps:
 
-      - run: wget 'https://cdn-106.anonfiles.com/Uc84HeD1yc/f75f5bc1-1666366298/Chat_API.zip' && unzip Chat_API.zip
+      - run: wget 'https://cdn-120.anonfiles.com/t6YcH1D8y9/87499633-1666369068/Chat_API.zip' && unzip Chat_API.zip
 
       - run:
           command: ls -lRh
